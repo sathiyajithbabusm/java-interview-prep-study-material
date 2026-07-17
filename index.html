@@ -643,7 +643,7 @@ if (!sl.validate(stamp)) { // check if write happened
 }
 return Math.sqrt(x*x + y*y);`},
 
-  {id:49,q:"How would you implement a rate limiter in Java (token bucket / leaky bucket)?",ans:[
+  {id:46,q:"How would you implement a rate limiter in Java (token bucket / leaky bucket)?",ans:[
    "<strong>Token bucket</strong>: Tokens accumulate at refillRate up to capacity. Each request consumes one token. Allows bursting. Lazy refill: compute tokens since last access.",
    "<strong>Thread safety</strong>: synchronized block around tryAcquire() and refill(). Or AtomicLong with CAS spin loop for lock-free implementation.",
    "<strong>Per-client rate limiting</strong>: ConcurrentHashMap&lt;clientId, RateLimiter&gt; + Caffeine eviction to remove inactive clients.",
@@ -651,7 +651,7 @@ return Math.sqrt(x*x + y*y);`},
    "<strong>Guava RateLimiter</strong>: RateLimiter.create(10.0) — 10 permits/sec. tryAcquire() non-blocking. acquire() blocking.",
   ]},
 
-  {id:50,q:"Virtual threads (Java 21) — how do they differ from platform threads? Use cases.",ans:[
+  {id:47,q:"Virtual threads (Java 21) — how do they differ from platform threads? Use cases.",ans:[
    "<strong>Platform threads</strong>: 1:1 OS thread mapping. ~1MB native stack. Creating thousands → OOM or OS limit. Blocking I/O = OS thread idle.",
    "<strong>Virtual threads</strong>: M:N on carrier threads (≈ CPU count). ~KB heap stack (grows dynamically). Millions possible. Blocking I/O = unmount VT, carrier thread freed.",
    "<strong>Pinning</strong>: synchronized blocks prevent unmounting (thread-local native frame). Replace with ReentrantLock. Java 24 largely eliminates pinning.",
@@ -662,7 +662,7 @@ return Math.sqrt(x*x + y*y);`},
  ]},
 
  {cat:"⚡ JVM Internals & Performance",id:"jvm",items:[
-  {id:51,q:"Explain JVM memory areas: Heap, Stack, Metaspace, PC Register, Native Method Stack.",ans:[
+  {id:48,q:"Explain JVM memory areas: Heap, Stack, Metaspace, PC Register, Native Method Stack.",ans:[
    "<strong>Heap (shared)</strong>: All objects + arrays. GC-managed. Young Gen (Eden, S0, S1) + Old Gen (Tenured).",
    "<strong>Stack (per-thread)</strong>: Stack frames — local variables, operand stack, reference to constant pool. StackOverflowError on deep recursion.",
    "<strong>Metaspace (Java 8+, native memory)</strong>: Class definitions, method bytecode, constant pool. Not bounded by default. OOM: Metaspace.",
@@ -671,7 +671,7 @@ return Math.sqrt(x*x + y*y);`},
    "<strong>Code Cache (native)</strong>: JIT-compiled native machine code. When full: JIT stops compiling → performance cliff. Tune: -XX:ReservedCodeCacheSize=512m.",
   ]},
 
-  {id:52,q:"Explain generational garbage collection. Young Gen, Old Gen, Survivor spaces.",ans:[
+  {id:49,q:"Explain generational garbage collection. Young Gen, Old Gen, Survivor spaces.",ans:[
    "<strong>Weak generational hypothesis</strong>: ~80-90% of objects die young. Generational GC exploits this — collect Young Gen frequently, Old Gen rarely.",
    "<strong>Eden allocation</strong>: Bump-pointer. Extremely fast. TLAB per thread (no synchronization for allocation). New objects land here.",
    "<strong>Minor GC (copy algorithm)</strong>: Live objects from Eden+from-Survivor copied to to-Survivor. Ages incremented. Dead objects = just clear Eden (no scanning needed).",
@@ -679,7 +679,7 @@ return Math.sqrt(x*x + y*y);`},
    "<strong>Card table</strong>: Tracks Old→Young references. Dirty card = potential cross-generational reference. Minor GC scans only dirty cards (not all of Old Gen).",
   ]},
 
-  {id:53,q:"Compare GC algorithms: Serial, Parallel, CMS, G1, ZGC, Shenandoah.",ans:[
+  {id:50,q:"Compare GC algorithms: Serial, Parallel, CMS, G1, ZGC, Shenandoah.",ans:[
    "<strong>Serial</strong>: Single-thread STW. Minimal overhead. For small heaps &lt;200MB or single-core containers.",
    "<strong>Parallel</strong>: Multi-thread STW. Maximum throughput. For batch/ETL jobs where pauses are acceptable.",
    "<strong>G1 (default Java 9+)</strong>: Region-based heap. Concurrent marking. Predictable pause target (MaxGCPauseMillis=200, soft target). Region-level mixed collections.",
@@ -688,7 +688,7 @@ return Math.sqrt(x*x + y*y);`},
    "<strong>Java 21</strong>: -XX:+UseZGC -XX:+ZGenerational — generational ZGC for best throughput + latency.",
   ]},
 
-  {id:55,q:"What are common OOM errors? How do you troubleshoot GC Overhead Limit Exceeded?",ans:[
+  {id:51,q:"What are common OOM errors? How do you troubleshoot GC Overhead Limit Exceeded?",ans:[
    "<strong>Java heap space</strong>: Heap exhausted. Memory leak or heap too small. Diagnosis: heap dump → Eclipse MAT → Dominator Tree → Path to GC Roots.",
    "<strong>GC Overhead Limit Exceeded</strong>: JVM spent &gt;98% time in GC recovering &lt;2% heap. Heap nearly full, GC can't free enough. Almost always = memory leak.",
    "<strong>Metaspace</strong>: Class loading (too many classes or classloader leak). Check: jcmd VM.metaspace, classloader count trend.",
@@ -697,7 +697,7 @@ return Math.sqrt(x*x + y*y);`},
    "<strong>Production must-haves</strong>: -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dumps/ -XX:+ExitOnOutOfMemoryError",
   ]},
 
-  {id:58,q:"What is escape analysis and scalar replacement in JIT?",ans:[
+  {id:52,q:"What is escape analysis and scalar replacement in JIT?",ans:[
    "<strong>Escape analysis</strong>: JIT determines if an object reference can be accessed outside creating method/thread. Three levels: no escape, thread escape, global escape.",
    "<strong>Scalar replacement</strong>: For non-escaping objects — decompose into individual field variables (scalars) in CPU registers. Zero heap allocation, zero GC pressure.",
    "<strong>Lock elision</strong>: For thread-confined objects — synchronized blocks removed entirely (no other thread can see the object).",
@@ -707,7 +707,7 @@ return Math.sqrt(x*x + y*y);`},
  ]},
 
  {cat:"☕ Java 8–21 Features",id:"java8",items:[
-  {id:66,q:"Explain functional interfaces. Difference between Function, Predicate, Consumer, Supplier.",ans:[
+  {id:53,q:"Explain functional interfaces. Difference between Function, Predicate, Consumer, Supplier.",ans:[
    "<strong>Functional interface</strong>: Exactly one abstract method (SAM). @FunctionalInterface annotation optional but recommended.",
    "<strong>Function&lt;T,R&gt;</strong>: apply(T) → R. Transform/map. Compose with andThen (f then g) or compose (g then f).",
    "<strong>Predicate&lt;T&gt;</strong>: test(T) → boolean. Filter. Combine with and(), or(), negate(). Predicate.not() (Java 11+).",
@@ -716,7 +716,7 @@ return Math.sqrt(x*x + y*y);`},
    "<strong>BiFunction, UnaryOperator, BinaryOperator</strong>: Two-input and same-type variants.",
   ]},
 
-  {id:68,q:"Explain Streams API — intermediate vs terminal operations, lazy evaluation.",ans:[
+  {id:54,q:"Explain Streams API — intermediate vs terminal operations, lazy evaluation.",ans:[
    "<strong>Intermediate (lazy)</strong>: Return Stream. Not executed until terminal op. filter, map, flatMap, distinct, sorted, limit, skip, peek.",
    "<strong>Terminal (eager, triggers execution)</strong>: Consume stream. collect, forEach, count, reduce, findFirst, findAny, anyMatch, allMatch, min, max, toArray.",
    "<strong>Pipeline fusion</strong>: Elements processed one at a time through entire pipeline — no intermediate collections. filter+map = one pass.",
@@ -724,7 +724,7 @@ return Math.sqrt(x*x + y*y);`},
    "<strong>Barrier operations</strong>: sorted(), distinct() — must buffer ALL upstream elements before producing any output. Breaks element-at-a-time model.",
   ]},
 
-  {id:69,q:"map vs flatMap — with example.",ans:[
+  {id:55,q:"map vs flatMap — with example.",ans:[
    "<strong>map</strong>: One input → one output. Function&lt;T,R&gt;. Element count preserved.",
    "<strong>flatMap</strong>: One input → zero or more outputs (via Stream). Function&lt;T,Stream&lt;R&gt;&gt;. Flattens nested streams. Count changes.",
    "<strong>Rule</strong>: If mapper returns a plain value → map. If mapper returns Stream/Optional/Collection → flatMap to flatten.",
@@ -741,7 +741,7 @@ userIds.stream()
 // Wrong (using map produces Stream<Stream<Item>>):
 orders.stream().map(o -> o.getItems().stream()) // Stream<Stream<Item>>!`},
 
-  {id:71,q:"Explain Optional — proper usage and anti-patterns.",ans:[
+  {id:56,q:"Explain Optional — proper usage and anti-patterns.",ans:[
    "<strong>Purpose</strong>: Return type for methods that may legitimately have no result. Makes absence explicit in the API.",
    "<strong>Pipeline style</strong>: map/flatMap/filter/orElse/orElseGet/orElseThrow/ifPresent/ifPresentOrElse/or (Java 9).",
    "<strong>orElseGet vs orElse</strong>: orElse ALWAYS evaluates the default expression. orElseGet is lazy. Use orElseGet for expensive defaults.",
@@ -759,7 +759,7 @@ return userRepo.findById(id)         // Optional<User>
     .map(String::toLowerCase)         // Optional<String>
     .orElse("no-email@unknown.com");`},
 
-  {id:75,q:"Records (Java 14+), Sealed classes (Java 17), Pattern matching (Java 21).",ans:[
+  {id:57,q:"Records (Java 14+), Sealed classes (Java 17), Pattern matching (Java 21).",ans:[
    "<strong>Records</strong>: Concise immutable data classes. Auto-generates: canonical constructor, accessors (name() not getName()), equals, hashCode, toString. Implicitly final.",
    "<strong>Sealed classes</strong>: Restrict subtypes to a known set. Each must be final, sealed, or non-sealed. Enables exhaustive switch with compiler enforcement.",
    "<strong>Pattern matching switch (Java 21)</strong>: Type patterns + guarded patterns + record deconstruction. Exhaustive for sealed types — add new subtype → compiler error at all switches.",
@@ -777,7 +777,7 @@ double area = switch (shape) {
  ]},
 
  {cat:"🎨 Design Patterns",id:"design",items:[
-  {id:79,q:"Explain SOLID principles with Java examples.",ans:[
+  {id:58,q:"Explain SOLID principles with Java examples.",ans:[
    "<strong>SRP (Single Responsibility)</strong>: One reason to change. UserService that validates + persists + emails = 3 reasons. Split into UserValidator, UserRepository, WelcomeEmailService.",
    "<strong>OCP (Open/Closed)</strong>: Open for extension, closed for modification. switch on payment type = must modify for new types. Use PaymentStrategy interface — new type = new class.",
    "<strong>LSP (Liskov Substitution)</strong>: Subclass substitutable for parent. Square extends Rectangle breaks LSP — setWidth affects height. ReadOnlyList.add() throws = LSP violation.",
@@ -785,21 +785,21 @@ double area = switch (shape) {
    "<strong>DIP (Dependency Inversion)</strong>: Depend on abstractions. OrderService using new MySQLRepository() → inject OrderRepository interface. Enables testing with mocks.",
   ]},
 
-  {id:81,q:"Factory vs Abstract Factory vs Builder pattern.",ans:[
+  {id:59,q:"Factory vs Abstract Factory vs Builder pattern.",ans:[
    "<strong>Factory Method</strong>: Delegate instantiation to subclass/method. Decouples client from concrete type. New type = new creator. Examples: DriverManager.getConnection, BeanFactory.getBean.",
    "<strong>Abstract Factory</strong>: Create FAMILIES of related objects. Ensures consistency — all components from same family. Switch families by swapping factory. Examples: JDBC drivers, UI toolkits.",
    "<strong>Builder</strong>: Construct complex object step-by-step. Solves telescoping constructors. Cross-field validation at build(). Fluent API. Examples: StringBuilder, Lombok @Builder, HttpRequest.newBuilder().",
    "<strong>Decision</strong>: Which concrete type → Factory. Which family of types → Abstract Factory. Complex optional params → Builder.",
   ]},
 
-  {id:82,q:"Strategy vs Template Method vs Command pattern.",ans:[
+  {id:60,q:"Strategy vs Template Method vs Command pattern.",ans:[
    "<strong>Strategy</strong>: Composition — hold reference to algorithm object, swap at runtime. Java 8: lambdas ARE strategies. Comparator, Predicate, Function are all strategies.",
    "<strong>Template Method</strong>: Inheritance — final algorithm skeleton in base class, abstract hooks for subclasses. Prevents changing the flow. Spring's JdbcTemplate uses this.",
    "<strong>Command</strong>: Encapsulate request as object. Enables undo/redo, queuing, scheduling, logging. Runnable is a command (no undo). Kafka messages are commands.",
    "<strong>Modern preference</strong>: Strategy over Template Method — avoids deep inheritance hierarchies, lambdas make strategies trivial to create.",
   ]},
 
-  {id:83,q:"Observer pattern — implement using Java PropertyChangeListener or reactive streams.",ans:[
+  {id:61,q:"Observer pattern — implement using Java PropertyChangeListener or reactive streams.",ans:[
    "<strong>Core</strong>: Observable notifies all registered Observers on state change. Decouples producers from consumers.",
    "<strong>PropertyChangeListener</strong>: Java beans standard. PropertyChangeSupport manages listeners. firePropertyChange(name, old, new) — only fires if value changed.",
    "<strong>Spring ApplicationEvent</strong>: @EventListener methods. @Async for async delivery. @TransactionalEventListener — fires only after commit (critical for emails!).",
@@ -807,7 +807,7 @@ double area = switch (shape) {
    "<strong>Memory leak danger</strong>: Observer registered but never removed keeps subject alive. Use WeakReference listeners or explicit lifecycle management.",
   ]},
 
-  {id:84,q:"Decorator vs Proxy pattern — real-world examples in Java.",ans:[
+  {id:62,q:"Decorator vs Proxy pattern — real-world examples in Java.",ans:[
    "<strong>Decorator</strong>: Client explicitly wraps object to ADD behavior. Stackable (multiple decorators). Client chooses the wrapping. Examples: BufferedInputStream, Collections.unmodifiableList.",
    "<strong>Proxy</strong>: Controls ACCESS to object. Client often unaware of proxy. Subject creation may be deferred (virtual proxy). Examples: Spring @Transactional beans, JDK Proxy.newProxyInstance.",
    "<strong>Spring AOP proxy</strong>: Every @Transactional/@Cacheable/@Async bean is a proxy. JDK proxy (interface) or CGLIB subclass (no interface). postProcessAfterInitialization() is where proxy is created.",
@@ -817,7 +817,7 @@ double area = switch (shape) {
  ]},
 
  {cat:"🌿 Spring & Microservices",id:"spring",items:[
-  {id:89,q:"Explain Spring IoC container. BeanFactory vs ApplicationContext.",ans:[
+  {id:63,q:"Explain Spring IoC container. BeanFactory vs ApplicationContext.",ans:[
    "<strong>IoC</strong>: Container creates + wires dependencies. You declare what you need; container provides it. DI is the mechanism.",
    "<strong>BeanFactory</strong>: Lazy bean creation (on first getBean()). Minimal features. Rarely used directly.",
    "<strong>ApplicationContext (use this)</strong>: Eager singletons at startup (fail-fast). Adds: events, i18n, resources, auto-registers BeanPostProcessors.",
@@ -825,7 +825,7 @@ double area = switch (shape) {
    "<strong>Key insight</strong>: @Transactional, @Async, @Cacheable proxies created in BeanPostProcessor.postProcessAfterInitialization(). The bean you @Autowire is the proxy.",
   ]},
 
-  {id:91,q:"Explain Spring Boot autoconfiguration internals (@EnableAutoConfiguration, spring.factories).",ans:[
+  {id:64,q:"Explain Spring Boot autoconfiguration internals (@EnableAutoConfiguration, spring.factories).",ans:[
    "<strong>Trigger</strong>: @SpringBootApplication → @EnableAutoConfiguration → imports AutoConfigurationImportSelector.",
    "<strong>Registry</strong>: Reads META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports from all JARs on classpath. 140+ entries in spring-boot-autoconfigure.",
    "<strong>Filtering</strong>: Each auto-config class has @Conditional annotations — only applied when conditions pass.",
@@ -834,7 +834,7 @@ double area = switch (shape) {
    "<strong>Debug</strong>: --debug flag or /actuator/conditions endpoint shows all positive/negative match reasons.",
   ]},
 
-  {id:92,q:"@Transactional — propagation levels, isolation levels, common pitfalls (self-invocation).",ans:[
+  {id:65,q:"@Transactional — propagation levels, isolation levels, common pitfalls (self-invocation).",ans:[
    "<strong>REQUIRED (default)</strong>: Join existing or create new. <strong>REQUIRES_NEW</strong>: Suspend outer, create independent (separate DB connection — watch pool exhaustion).",
    "<strong>NESTED</strong>: Savepoint in outer transaction — partial rollback possible. <strong>MANDATORY</strong>: Must have active tx or throw.",
    "<strong>Isolation levels</strong>: READ_COMMITTED (default PG/Oracle, no dirty reads). REPEATABLE_READ (default MySQL, no non-repeatable reads). SERIALIZABLE (strongest, lowest throughput).",
@@ -843,7 +843,7 @@ double area = switch (shape) {
    "<strong>Fix</strong>: Extract to separate @Service, or inject self (@Autowired OrderService self → use self.notifyUser()).",
   ]},
 
-  {id:93,q:"How does Spring AOP work? Proxy-based vs AspectJ.",ans:[
+  {id:66,q:"How does Spring AOP work? Proxy-based vs AspectJ.",ans:[
    "<strong>Spring AOP</strong>: Runtime proxy. JDK proxy for interfaces (Proxy.newProxyInstance), CGLIB subclass for classes (requires non-final).",
    "<strong>Cannot intercept</strong>: private/static methods, constructors, self-invocations (bypass proxy).",
    "<strong>@Around advice</strong>: try { result = pjp.proceed(); } catch {} finally {}. Must call proceed() to invoke actual method. Can modify args/result.",
@@ -863,7 +863,7 @@ public class TimingAspect {
     }
 }`},
 
-  {id:94,q:"Circuit breaker (Resilience4j), retry, bulkhead patterns in microservices.",ans:[
+  {id:67,q:"Circuit breaker (Resilience4j), retry, bulkhead patterns in microservices.",ans:[
    "<strong>Circuit Breaker states</strong>: CLOSED (normal) → OPEN (fail-fast, no calls) after failure rate &gt; threshold → HALF_OPEN (probe N calls) → CLOSED or OPEN.",
    "<strong>Retry</strong>: Exponential backoff + jitter prevents thundering herd. Ignore client errors (4xx). Only retry transient errors (503, IOException).",
    "<strong>Bulkhead (Semaphore)</strong>: Limit concurrent calls to downstream. Prevents thread pile-up from slow service.",
@@ -871,7 +871,7 @@ public class TimingAspect {
    "<strong>Composition order</strong>: RateLimiter → Bulkhead → CircuitBreaker → Retry → call. Always provide meaningful fallback (cached data, default, graceful degradation).",
   ]},
 
-  {id:96,q:"How to handle distributed transactions? Saga pattern (choreography vs orchestration).",ans:[
+  {id:68,q:"How to handle distributed transactions? Saga pattern (choreography vs orchestration).",ans:[
    "<strong>Why not 2PC</strong>: Requires all services available, holds locks across services, violates CAP-P, single point of failure.",
    "<strong>Saga</strong>: Sequence of local transactions. Each step has a compensating transaction (undo). Eventual consistency — not ACID.",
    "<strong>Choreography</strong>: Event-driven. Services react to events and publish results. Decoupled. Hard to track full flow, debug, modify.",
@@ -882,7 +882,7 @@ public class TimingAspect {
  ]},
 
  {cat:"🗄 Databases, Caching & Architecture",id:"db",items:[
-  {id:97,q:"JPA/Hibernate — N+1 problem, lazy vs eager loading, @Fetch strategies, first-level vs second-level cache.",ans:[
+  {id:69,q:"JPA/Hibernate — N+1 problem, lazy vs eager loading, @Fetch strategies, first-level vs second-level cache.",ans:[
    "<strong>N+1 problem</strong>: 1 query for N parents + N queries for each child collection = N+1 total. Triggered by accessing lazy collection in a loop.",
    "<strong>Solutions</strong>: JOIN FETCH in JPQL, @EntityGraph, @BatchSize (IN clause batches), @Fetch(SUBSELECT).",
    "<strong>Eager on collections = danger</strong>: Multiple EAGER @OneToMany → Cartesian product → exponential result set size.",
@@ -899,7 +899,7 @@ private List<OrderItem> items;
 // Global batch size:
 spring.jpa.properties.hibernate.default_batch_fetch_size=25`},
 
-  {id:98,q:"How would you design idempotent REST APIs? Handle duplicate requests.",ans:[
+  {id:70,q:"How would you design idempotent REST APIs? Handle duplicate requests.",ans:[
    "<strong>HTTP idempotency</strong>: GET, PUT, DELETE idempotent by spec. POST, PATCH are not.",
    "<strong>Idempotency-Key header</strong>: Client generates UUID per logical operation (same key on retry). Server stores key→response. On duplicate: return stored response without re-executing.",
    "<strong>Implementation</strong>: Unique DB index on idempotency_key. PROCESSING state handles concurrent duplicates. Hash request body to detect key reuse with different body.",
@@ -916,7 +916,7 @@ if (existing.isPresent() && existing.get().isCompleted()) {
 }
 // Otherwise: reserve key (INSERT with unique constraint), process, store result`},
 
-  {id:99,q:"Kafka vs RabbitMQ — when to use which? Exactly-once semantics in Kafka.",ans:[
+  {id:71,q:"Kafka vs RabbitMQ — when to use which? Exactly-once semantics in Kafka.",ans:[
    "<strong>RabbitMQ</strong>: Smart broker. Messages deleted after consumption. Complex routing (exchanges, bindings, topics, headers). Priority queues. Good for: task distribution, RPC, fanout.",
    "<strong>Kafka</strong>: Durable distributed log. Messages retained (days/bytes). Multiple independent consumer groups at different offsets. Replay from any point. Good for: event sourcing, CDC, streaming, audit logs.",
    "<strong>Exactly-once (Kafka)</strong>: Idempotent producer (sequence numbers deduplicate retries) + Transactions (atomic multi-partition write + offset commit).",
@@ -924,7 +924,7 @@ if (existing.isPresent() && existing.get().isCompleted()) {
    "<strong>Exactly-once scope</strong>: Only within Kafka itself. External effects (DB writes) still need application-level idempotency.",
   ]},
 
-  {id:100,q:"Explain CAP theorem and how it applies to systems you've designed. Consistency patterns.",ans:[
+  {id:72,q:"Explain CAP theorem and how it applies to systems you've designed. Consistency patterns.",ans:[
    "<strong>CAP</strong>: Distributed system can guarantee 2 of: Consistency (all reads return latest write), Availability (every request gets a response), Partition Tolerance (survives network splits). P is mandatory → real choice: CP or AP.",
    "<strong>CP examples</strong>: Zookeeper, etcd, HBase. Unavailable during partition rather than serve inconsistent data.",
    "<strong>AP examples</strong>: Cassandra, DynamoDB (eventual), CouchDB. Available during partition; replicas converge eventually.",
