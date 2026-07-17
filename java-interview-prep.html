@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Interview Q&A — 10 YOE Study Guide</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f1117;color:#e2e8f0;line-height:1.6}
+header{background:linear-gradient(135deg,#1a1f2e,#2d3748);padding:2rem;text-align:center;border-bottom:3px solid #4299e1}
+header h1{font-size:2.2rem;color:#90cdf4;margin-bottom:.5rem}
+header p{color:#718096;font-size:.95rem}
+.stats{display:flex;gap:2rem;justify-content:center;margin-top:1rem;flex-wrap:wrap}
+.stat{background:#2d3748;padding:.5rem 1.2rem;border-radius:20px;font-size:.85rem;color:#a0aec0}
+.stat span{color:#68d391;font-weight:700}
+#toc{background:#1a1f2e;padding:2rem;border-bottom:1px solid #2d3748}
+#toc h2{color:#90cdf4;margin-bottom:1rem;font-size:1.2rem}
+.toc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.4rem}
+.toc-item{display:flex;align-items:center;gap:.5rem;padding:.4rem .6rem;border-radius:6px;text-decoration:none;color:#a0aec0;font-size:.82rem;transition:all .2s;cursor:pointer}
+.toc-item:hover{background:#2d3748;color:#90cdf4}
+.toc-num{background:#2d3748;color:#68d391;padding:.1rem .4rem;border-radius:4px;font-size:.75rem;font-weight:700;min-width:2rem;text-align:center}
+#toolbar{padding:1rem 2rem;background:#1a1f2e;border-bottom:1px solid #2d3748;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+#search{flex:1;min-width:200px;padding:.6rem 1rem;background:#2d3748;border:1px solid #4a5568;border-radius:8px;color:#e2e8f0;font-size:.95rem;outline:none}
+#search:focus{border-color:#4299e1}
+#search::placeholder{color:#718096}
+.btn{padding:.5rem 1rem;border-radius:6px;border:none;cursor:pointer;font-size:.85rem;font-weight:600}
+.btn-blue{background:#2a4365;color:#90cdf4}
+.btn-blue:hover{background:#2c5282}
+.btn-green{background:#276749;color:#9ae6b4}
+.btn-green:hover{background:#2f855a}
+#count{color:#718096;font-size:.8rem;white-space:nowrap}
+.section-header{background:#1a1f2e;padding:1rem 2rem;border-left:4px solid #4299e1;margin:1rem 0 0}
+.section-header h2{color:#90cdf4;font-size:1.05rem}
+.qa-grid{padding:1rem 2rem;display:grid;gap:.6rem}
+.card{background:#1a1f2e;border:1px solid #2d3748;border-radius:10px;overflow:hidden;transition:border-color .2s}
+.card:hover{border-color:#4a5568}
+.card.open{border-color:#4299e1}
+.card-header{padding:.85rem 1.1rem;cursor:pointer;display:flex;align-items:flex-start;gap:.75rem;user-select:none}
+.q-num{background:#2a4365;color:#90cdf4;border-radius:6px;padding:.15rem .55rem;font-size:.78rem;font-weight:700;white-space:nowrap;margin-top:.15rem}
+.q-text{font-weight:600;color:#e2e8f0;font-size:.92rem;flex:1}
+.arrow{color:#4a5568;font-size:.75rem;transition:transform .3s;margin-top:.2rem;flex-shrink:0}
+.card.open .arrow{transform:rotate(90deg);color:#90cdf4}
+.card-body{display:none;padding:0 1.1rem 1.1rem;border-top:1px solid #2d3748}
+.card.open .card-body{display:block}
+.card-body ul{padding-left:1.2rem;margin:.75rem 0}
+.card-body li{margin:.35rem 0;color:#cbd5e0;font-size:.88rem;line-height:1.55}
+.card-body li strong{color:#90cdf4}
+.card-body li em{color:#f6e05e}
+.card-body pre{background:#0d1117;border:1px solid #2d3748;border-radius:6px;padding:.9rem 1rem;margin:.8rem 0;overflow-x:auto;font-size:.8rem;line-height:1.55}
+.card-body code{font-family:'JetBrains Mono','Cascadia Code','Fira Code',monospace;color:#a8d8a8}
+.card-body .comment{color:#6a737d}
+.hidden{display:none!important}
+@media print{
+  header .stats,#toc,#toolbar{display:none}
+  body{background:#fff;color:#000}
+  .card{border:1px solid #ccc;margin:.4rem 0;break-inside:avoid}
+  .card-body{display:block!important}
+  .arrow,.card-header{cursor:default}
+  .card-body pre{background:#f5f5f5;border:1px solid #ddd}
+  .card-body code{color:#2d3748}
+  .card-body li{color:#2d3748}
+  .section-header{background:#f0f4f8;border-left:4px solid #3182ce;margin:.8rem 0 0}
+  .section-header h2{color:#2b6cb0}
+  .q-num{background:#ebf8ff;color:#2b6cb0}
+  .q-text{color:#2d3748}
+  header h1{color:#2b6cb0}
+  header{background:#ebf8ff;border-bottom:2px solid #3182ce}
+}
+@media(max-width:600px){.qa-grid,.section-header{padding:.5rem 1rem}#toolbar{padding:.75rem 1rem}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>☕ Java Interview Q&amp;A</h1>
+  <p>Comprehensive study guide for 10+ YOE developers targeting top tech companies</p>
+  <div class="stats">
+    <div class="stat">Questions: <span>100</span></div>
+    <div class="stat">Categories: <span>8</span></div>
+    <div class="stat">Companies: <span>Amazon · Walmart · Google · JPMorgan · Flipkart</span></div>
+  </div>
+</header>
+
+<div id="toc">
+  <h2>📋 Quick Navigation</h2>
+  <div class="toc-grid" id="toc-links"></div>
+</div>
+
+<div id="toolbar">
+  <input id="search" type="text" placeholder="🔍 Search questions… (e.g. volatile, HashMap, SOLID, @Transactional)">
+  <button class="btn btn-blue" onclick="expandAll()">Expand All</button>
+  <button class="btn btn-blue" onclick="collapseAll()">Collapse All</button>
+  <button class="btn btn-green" onclick="window.print()">🖨 Print / Save PDF</button>
+  <span id="count"></span>
+</div>
+
+<div id="main"></div>
+
+<script>
+const data = [
+ {cat:"🔵 Core Java & OOP",id:"core",items:[
+  {id:1,q:"JDK vs JRE vs JVM. How does the JIT compiler work internally?",ans:[
+   "<strong>JVM</strong>: Abstract machine that executes bytecode. Manages heap, GC, threads, security. Platform-independent layer.",
+   "<strong>JRE</strong>: JVM + standard class libraries (java.lang, java.util, etc.). For <em>running</em> Java programs.",
+   "<strong>JDK</strong>: JRE + javac compiler + javap, jstack, jmap, jshell, JFR, VisualVM. For <em>developing</em> Java.",
+   "<strong>JIT tiered compilation</strong>: Level 0 (interpreted) → Level 1–2 (C1 fast compile) → Level 3 (C1 + profiling) → Level 4 (C2 heavily optimized). Hot threshold: ~10,000 invocations.",
+   "<strong>C2 optimizations</strong>: method inlining (most impactful), loop unrolling, escape analysis, scalar replacement, dead code elimination, lock elision.",
+   "<strong>Deoptimization</strong>: If a speculative assumption breaks (new subclass loaded), JIT reverts to interpreter and re-profiles.",
+  ],code:`// JIT selects inlining candidates based on call frequency and bytecode size
+// Escape analysis: if object doesn't escape method scope →
+//   Stack allocate OR scalar replace (fields become registers) → zero GC pressure
+// -XX:+PrintCompilation  — see what JIT is compiling
+// -XX:ReservedCodeCacheSize=512m — prevent JIT decompile when Code Cache is full`},
+
+  {id:2,q:"Java Memory Model (JMM). Explain happens-before relationship.",ans:[
+   "<strong>JMM</strong>: Specification defining when writes by one thread are guaranteed visible to another thread. Abstracts CPU cache/reordering differences.",
+   "<strong>Without synchronization</strong>: JIT or CPU may cache values in registers or reorder instructions — another thread sees stale data forever.",
+   "<strong>Happens-before rules</strong>: (1) Program order within thread, (2) Monitor unlock→lock, (3) Volatile write→read, (4) Thread.start()→child actions, (5) Thread.join()→subsequent actions, (6) Transitivity.",
+   "<strong>volatile write happens-before</strong> any subsequent volatile read of same variable. Piggybacking: all writes before volatile write are also visible.",
+   "<strong>DCL requires volatile</strong>: Without it, JIT may assign reference before constructor completes (steps: allocate, <em>assign</em>, initialize reordered → partial object visible).",
+   "<strong>Memory barriers</strong>: volatile write → StoreStore + StoreLoad fence. volatile read → LoadLoad + LoadStore fence.",
+  ],code:`int x = 0;
+volatile boolean ready = false;
+
+// Thread 1:
+x = 42;         // non-volatile write
+ready = true;   // volatile write — StoreStore fence ensures x=42 visible first
+
+// Thread 2:
+if (ready) {    // volatile read — LoadLoad fence after
+    print(x);   // guaranteed to see x=42 due to happens-before chain
+}`},
+
+  {id:3,q:"Metaspace vs PermGen. Why was PermGen removed in Java 8?",ans:[
+   "<strong>PermGen (pre-Java 8)</strong>: Fixed-size region (default 64–256MB) storing class metadata, method bytecode, static variables. Set via -XX:MaxPermSize.",
+   "<strong>Problems with PermGen</strong>: Fixed cap → OOM on hot redeploys or dynamic class generation (Hibernate/Spring proxies). GC was expensive (scanning for unreachable classloaders). Separate from heap → separate tuning.",
+   "<strong>Metaspace (Java 8+)</strong>: Class metadata moved to <em>native memory</em> (outside Java heap). Grows dynamically by default. No fixed cap unless you set -XX:MaxMetaspaceSize.",
+   "<strong>GC improvement</strong>: Entire classloader's metadata freed in bulk when classloader becomes unreachable — much more efficient than PermGen scanning.",
+   "<strong>What moved where</strong>: String pool → heap (Java 7). Static fields → heap (as part of Class object). Class metadata → Metaspace.",
+   "<strong>Production tuning</strong>: Always set -XX:MaxMetaspaceSize=512m to prevent unbounded native memory growth from classloader leaks.",
+  ],code:`// Diagnose Metaspace issues:
+jcmd <pid> VM.metaspace          // classloader breakdown
+// Growing ClassLoader count after redeploys = classloader leak
+// Fix: find what GC root keeps the ClassLoader alive (Eclipse MAT)`},
+
+  {id:4,q:"Difference between ==, .equals(), and hashCode(). Contract between equals and hashCode.",ans:[
+   "<strong>==</strong>: Reference equality for objects (same memory address). Value equality for primitives.",
+   "<strong>.equals()</strong>: Logical/semantic equality. Default (Object) is ==. Override to compare by meaningful fields.",
+   "<strong>hashCode()</strong>: Integer for hash-based bucketing (HashMap, HashSet). Default uses identity hash (derived from memory address in HotSpot).",
+   "<strong>The Contract</strong>: If a.equals(b) is true → a.hashCode() MUST equal b.hashCode(). Violation: objects stored in HashMap can't be found.",
+   "<strong>Integer cache</strong>: Integer.valueOf() caches -128 to 127. == works accidentally in that range; fails outside. Always use .equals() for wrappers.",
+   "<strong>Mutable key danger</strong>: Mutating a field used in hashCode() after putting in a Map → stranded entry (stored in old bucket, found in new bucket).",
+  ],code:`@Override public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Employee e)) return false;
+    return this.id == e.id; // use business key
+}
+@Override public int hashCode() {
+    return Objects.hash(id); // must be consistent with equals
+}
+// Integer gotcha:
+Integer a = 200, b = 200;
+System.out.println(a == b); // false — outside cache range!
+System.out.println(a.equals(b)); // true — always use equals()`},
+
+  {id:5,q:"Why is String immutable in Java? Explain String pool and intern().",ans:[
+   "<strong>Reasons for immutability</strong>: Thread safety (share freely), hashCode caching (computed once, reused), security (class loading uses String), String pool sharing.",
+   "<strong>String pool</strong>: JVM-maintained canonical store. All string literals auto-interned. Java 7+: pool on <em>heap</em> (GC-eligible via weak references). Java 6: PermGen (fixed, risky).",
+   "<strong>intern()</strong>: Returns canonical pool entry. Adds to pool if absent. Useful when millions of strings share a small set of distinct values (low cardinality).",
+   "<strong>Compact Strings (Java 9+)</strong>: Internally byte[] + coder byte. Latin-1 strings = 1 byte/char (vs 2 bytes UTF-16). ~50% less memory for typical English strings.",
+   "<strong>intern() pitfall</strong>: Interning high-cardinality values (UUIDs, user IDs) pollutes StringTable → GC scan time increases → latency spikes. Only intern truly repeated low-cardinality values.",
+  ],code:`String a = "hello";               // auto-interned literal
+String b = new String("hello");   // new heap object — NOT interned
+String c = b.intern();            // returns pool entry
+System.out.println(a == b);       // false
+System.out.println(a == c);       // true — c is the pool entry
+
+// StringTable tuning:
+// -XX:StringTableSize=1000003   (prime — fewer hash collisions)
+// jcmd <pid> VM.stringtable     (inspect usage)`},
+
+  {id:6,q:"String vs StringBuilder vs StringBuffer — internal implementation.",ans:[
+   "<strong>String</strong>: Immutable. Backed by final byte[]. Every 'modification' creates a new object. hashCode cached after first computation.",
+   "<strong>StringBuilder</strong>: Mutable. Resizable byte[]. Grows by 50% (oldCap*2+2). NOT thread-safe. Use in single-threaded string building.",
+   "<strong>StringBuffer</strong>: Same as StringBuilder but every method synchronized. Thread-safe, slower. Rarely needed — build per-thread, share immutable String result.",
+   "<strong>Compiler optimization</strong>: String + rewritten to StringBuilder (Java 8) or invokedynamic/StringConcatFactory (Java 9+). But NOT in loops.",
+   "<strong>Loop pitfall</strong>: result += s in a loop = new StringBuilder per iteration = O(n²). Pre-size one StringBuilder: new StringBuilder(estimatedSize).",
+  ],code:`// Bad — O(n²):
+String result = "";
+for (String s : list) result += s;
+
+// Good — O(n) amortized:
+StringBuilder sb = new StringBuilder(list.size() * 20);
+for (String s : list) sb.append(s);
+String result = sb.toString(); // one allocation at the end`},
+
+  {id:7,q:"Four pillars of OOP with real-world design examples.",ans:[
+   "<strong>Encapsulation</strong>: Bundle data + behavior; control access. BankAccount with private balance, validated deposit()/withdraw(). Invariant protection: balance never goes negative.",
+   "<strong>Abstraction</strong>: Expose what, hide how. JDBC's Connection/Statement/ResultSet hide MySQL vs PostgreSQL internals. PaymentGateway interface hides Stripe vs PayPal.",
+   "<strong>Inheritance</strong>: IS-A relationship — subclass behaviorally specializes parent. EmailNotification IS-A Notification. Violating LSP (Square extends Rectangle) = wrong use.",
+   "<strong>Polymorphism</strong>: One interface, many behaviors. JVM dispatches via vtable at runtime. Enables Strategy, Observer, Template Method patterns.",
+   "<strong>Common anti-pattern</strong>: Anemic domain model — all fields private but 15 getters+setters exposed. Encapsulation theater. Real encapsulation: behavior lives with data.",
+  ]},
+
+  {id:8,q:"Composition vs Inheritance — when to prefer which?",ans:[
+   "<strong>Inheritance problems</strong>: Tight coupling to parent internals (fragile base class), can't change behavior at runtime, single-inheritance constraint, ISA commitment.",
+   "<strong>Composition benefits</strong>: Swap behavior at runtime, multiple 'parents' via interfaces, loose coupling, no fragile base class, easier to test.",
+   "<strong>Bloch's rule</strong> (Effective Java Item 18): If inheriting purely for code reuse → use composition. Inherit only when true IS-A relationship AND LSP holds.",
+   "<strong>InstrumentedHashSet example</strong>: Extending HashSet → addAll() internally calls add() → double counting. Composition wraps HashSet → no internal leakage.",
+   "<strong>When inheritance is correct</strong>: Template Method pattern (controlled hooks), building a framework base class designed for extension, true behavioral IS-A.",
+  ],code:`// Composition (correct):
+public class InstrumentedSet<E> implements Set<E> {
+    private final Set<E> delegate; // wraps any Set
+    private int addCount = 0;
+    // delegate.addAll() calling add() doesn't affect our count
+    // because we override add() on the wrapper, not inside HashSet
+}`},
+
+  {id:9,q:"Method overloading vs overriding. Can we overload main()? Can we override static methods?",ans:[
+   "<strong>Overloading</strong>: Same name, different parameter list. Resolved at compile time (static polymorphism). Return type alone ≠ overloading.",
+   "<strong>Overriding</strong>: Subclass provides same signature. Resolved at runtime via vtable (dynamic polymorphism). Same/covariant return, same/broader access, no broader checked exceptions.",
+   "<strong>main() overloading</strong>: Yes — you can have main(int), main(String). JVM calls only public static void main(String[]). Java 21+ preview: simplified launcher.",
+   "<strong>Static methods</strong>: Cannot be overridden — they are <em>hidden</em>. Resolution is compile-time based on reference type, not runtime object type.",
+   "<strong>@Override annotation</strong>: Always use it — compile error if you accidentally create a new method instead of overriding (typo protection).",
+  ],code:`Parent p = new Child();
+p.staticMethod();   // "Parent static" — reference type decides (compile-time)
+p.instanceMethod(); // "Child instance" — actual object type decides (vtable)
+// Static methods are NOT polymorphic — never call them on instances`},
+
+  {id:10,q:"Abstract classes vs interfaces (Java 8+ with default methods).",ans:[
+   "<strong>Key remaining difference</strong>: Interfaces cannot have instance fields or constructors. Abstract classes can — enabling stateful base classes.",
+   "<strong>Default methods (Java 8)</strong>: Backward-compatible interface evolution. Collection.stream(), forEach(), removeIf() added without breaking all implementations.",
+   "<strong>Static methods (Java 8)</strong>: Interface-scoped utilities. NOT inherited by implementing classes.",
+   "<strong>Private methods (Java 9)</strong>: Shared helpers between default methods. Not exposed to implementors.",
+   "<strong>Use abstract class when</strong>: Need shared state, protected helpers, constructor enforcement, Template Method pattern.",
+   "<strong>Use interface when</strong>: Defining capability/role, multiple type inheritance needed, public API for unrelated implementations.",
+  ]},
+
+  {id:11,q:"Diamond problem in Java and how it's resolved with interfaces.",ans:[
+   "<strong>Diamond</strong>: Class D implements A and B; both A and B have default method void greet(). Ambiguous — which version does D inherit?",
+   "<strong>Rule 1</strong>: Class method always beats interface default. Even abstract class method beats interface default.",
+   "<strong>Rule 2</strong>: More specific interface wins. If B extends A and both have default greet(), B's version wins (child beats parent interface).",
+   "<strong>Rule 3</strong>: Unresolvable ambiguity → compiler error. Must override and explicitly resolve using InterfaceName.super.method().",
+  ],code:`interface A { default void greet() { System.out.println("A"); } }
+interface B { default void greet() { System.out.println("B"); } }
+
+class C implements A, B {
+    @Override public void greet() {
+        A.super.greet(); // explicit delegation — unique to this context
+        // or B.super.greet(), or own implementation
+    }
+}`},
+
+  {id:12,q:"Marker interfaces. Examples and how JVM treats them.",ans:[
+   "<strong>Marker interface</strong>: Empty interface — no methods, no fields. Acts as a type tag. Detected at runtime via instanceof or reflection.",
+   "<strong>Serializable</strong>: ObjectOutputStream checks instanceof Serializable before serializing. Throws NotSerializableException if not. Bytecode: no special instructions — pure runtime check.",
+   "<strong>Cloneable</strong>: JVM's native Object.clone() checks Cloneable. Throws CloneNotSupportedException if not implemented. Design flaw — clone() not declared in Cloneable.",
+   "<strong>RandomAccess</strong>: Collections.binarySearch() checks instanceof RandomAccess to choose index-based vs iterator traversal. ArrayList yes, LinkedList no.",
+   "<strong>Modern alternative</strong>: Annotations — can carry data, target specific elements (method/field/class), don't pollute type hierarchy.",
+  ]},
+
+  {id:13,q:"final, finally, finalize(). Why is finalize() deprecated?",ans:[
+   "<strong>final variable</strong>: One assignment only. For objects: reference is final, not content. final fields → JMM safely published after constructor.",
+   "<strong>final method</strong>: Cannot be overridden. JIT can inline aggressively. Use for security-critical methods.",
+   "<strong>final class</strong>: Cannot be subclassed. String, Integer, System are final. Prevents malicious overrides.",
+   "<strong>finally</strong>: Always executes (except System.exit() / JVM crash). Never return from finally — swallows exceptions. Use try-with-resources instead for cleanup.",
+   "<strong>finalize() problems</strong>: Non-deterministic timing (may never run). Two GC cycles to collect. Finalizer thread bottleneck. Exceptions silently discarded. Security vulnerability.",
+   "<strong>Replacements</strong>: AutoCloseable + try-with-resources (deterministic). java.lang.ref.Cleaner (Java 9+) for native resource safety nets.",
+  ],code:`// Correct: AutoCloseable
+try (Connection c = pool.getConnection();
+     PreparedStatement ps = c.prepareStatement(sql)) {
+    // work
+} // both closed in reverse order, even on exception
+
+// Cleaner for native resources (safety net only):
+Cleaner.Cleanable cleanable = CLEANER.register(this, new CleanAction(nativePtr));
+// CleanAction must NOT hold reference to 'this' — would prevent GC`},
+
+  {id:14,q:"Autoboxing/unboxing. Performance issues it causes.",ans:[
+   "<strong>Autoboxing</strong>: Compiler inserts Integer.valueOf(42) when int used where Integer expected. Bytecode has explicit calls.",
+   "<strong>Unboxing</strong>: Compiler inserts .intValue() when Integer used where int expected.",
+   "<strong>Integer cache</strong>: valueOf() caches -128..127. == works for cached range (true), fails outside (false). Always use .equals() for wrapper comparisons.",
+   "<strong>Pitfall 1</strong>: Long sum = 0L; for(long i...) sum += i; → ONE MILLION Long objects allocated in loop.",
+   "<strong>Pitfall 2</strong>: Unboxing null → NullPointerException. map.get(key) returns null → int x = map.get(key) → NPE with confusing stack trace.",
+   "<strong>Pitfall 3</strong>: List.remove(1) removes index 1. List.remove(Integer.valueOf(1)) removes value 1. Different overloads — wrong one causes subtle bugs.",
+  ],code:`// Pitfall 1 — fix: use primitive long:
+long sum = 0L; // not Long — zero boxing
+for (long i = 0; i < 1_000_000; i++) sum += i;
+
+// Pitfall 3 — explicit boxing to call correct overload:
+List<Integer> list = new ArrayList<>(List.of(1, 2, 3));
+list.remove(Integer.valueOf(2)); // removes VALUE 2, not INDEX 2`},
+
+  {id:15,q:"Pass-by-value vs pass-by-reference in Java.",ans:[
+   "<strong>Java is always pass-by-value.</strong> No exceptions.",
+   "<strong>Primitives</strong>: The value itself is copied. Method cannot change caller's variable.",
+   "<strong>Objects</strong>: The reference VALUE (memory address) is copied. Both caller and method point to same object. Method CAN mutate the object.",
+   "<strong>Method CANNOT</strong> make caller's variable point to a different object — reassigning the parameter has no effect outside the method.",
+   "<strong>Proof — swap doesn't work</strong>: void swap(Object a, Object b) — after swap, caller's variables unchanged. True pass-by-reference would make swap work.",
+  ],code:`void modify(List<String> list) {
+    list.add("new item"); // works — mutates the SHARED object
+    list = new ArrayList<>(); // NO effect on caller's reference
+}
+List<String> myList = new ArrayList<>();
+modify(myList);
+System.out.println(myList); // [new item] — mutation visible
+// myList still points to original ArrayList — reassignment didn't affect it`},
+ ]},
+
+ {cat:"📦 Collections Framework",id:"collections",items:[
+  {id:16,q:"Internal working of HashMap (pre-Java 8 vs Java 8+ with treeification).",ans:[
+   "<strong>Structure</strong>: Node&lt;K,V&gt;[] table — power-of-2 sized array. Each slot = bucket (linked list or tree).",
+   "<strong>Hash spreading</strong>: hash(key) = key.hashCode() ^ (h >>> 16). XOR high bits into low bits improves distribution for small tables.",
+   "<strong>Bucket index</strong>: hash &amp; (n-1). Fast bitwise modulo — only works because capacity is always power of 2.",
+   "<strong>Pre-Java 8 collision</strong>: Singly linked list per bucket. O(n) worst case. Hash flooding attack possible.",
+   "<strong>Java 8+ treeification</strong>: TREEIFY_THRESHOLD=8. UNTREEIFY_THRESHOLD=6 (hysteresis). MIN_TREEIFY_CAPACITY=64 (resize first if table small). Red-black tree = O(log n).",
+   "<strong>Resize</strong>: At 75% load → double capacity. Entries split: stay at same index OR move to oldIndex+oldCapacity (1-bit check). O(n) total.",
+   "<strong>Thread safety</strong>: NOT thread-safe. Java 7: resize could cause infinite loop. Java 8+: data corruption. Use ConcurrentHashMap.",
+  ],code:`// Why TREEIFY_THRESHOLD = 8?
+// Poisson distribution at load factor 0.75: P(bucket has 8+ entries) = 0.00000006
+// If you're hitting treeification: your hashCode() is broken
+// -XX:AutoBoxCacheMax=1000 — extend Integer cache for domain integers`},
+
+  {id:17,q:"How does ConcurrentHashMap work internally? Segment locking vs bucket locking.",ans:[
+   "<strong>Java 7</strong>: 16 Segment objects (each a ReentrantLock). Max 16 concurrent writers. size() sums all segment counts (retries 2x then locks all).",
+   "<strong>Java 8 (complete rewrite)</strong>: No segments. Lock per individual bucket HEAD node via synchronized(f). CAS for inserting into empty bucket. Potentially N concurrent writers.",
+   "<strong>Reads</strong>: Fully lock-free. Node.val and Node.next are volatile. No locking for get().",
+   "<strong>size()</strong>: Distributed LongAdder-style counter (baseCount + CounterCell[]). No global lock — near-O(1).",
+   "<strong>Resize</strong>: Cooperative — multiple threads help transfer buckets. ForwardingNode placed in transferred buckets (hash=MOVED=-1).",
+   "<strong>No null keys/values</strong>: Eliminates ambiguity between 'missing key' and 'key maps to null' in concurrent read-then-act patterns.",
+  ]},
+
+  {id:18,q:"HashMap vs LinkedHashMap vs TreeMap vs Hashtable.",ans:[
+   "<strong>HashMap</strong>: Hash table. No guaranteed order. O(1) avg. Allows 1 null key. Not thread-safe.",
+   "<strong>LinkedHashMap</strong>: HashMap + doubly-linked list through all entries. Maintains insertion order (or access order with accessOrder=true). O(1) ops. Iteration O(n) not O(capacity+n). LRU cache foundation.",
+   "<strong>TreeMap</strong>: Red-black tree. Keys sorted (natural or Comparator). O(log n) all ops. Rich NavigableMap API: floorKey, ceilingKey, subMap, headMap, tailMap, pollFirstEntry.",
+   "<strong>Hashtable</strong>: Legacy (Java 1.0). Every method synchronized. No null keys/values. Don't use — ConcurrentHashMap for thread-safety.",
+  ]},
+
+  {id:19,q:"How does HashSet work internally? Load factor and rehashing.",ans:[
+   "<strong>Implementation</strong>: HashSet IS a HashMap&lt;E, Object&gt; where all values = shared static PRESENT sentinel object.",
+   "<strong>add(e)</strong>: map.put(e, PRESENT) returns null (new key) or PRESENT (duplicate). Returns true if null.",
+   "<strong>Load factor 0.75</strong>: Statistically balances space vs collision rate. Poisson distribution keeps expected chain length ~0.75.",
+   "<strong>Rehashing</strong>: When size > capacity × loadFactor → new array at double size. All entries re-placed via new hash computation. O(n) total.",
+   "<strong>Mutable element danger</strong>: Change a field used in hashCode after adding to Set → element in wrong bucket → can't remove it.",
+   "<strong>Variants</strong>: LinkedHashSet (insertion order, backed by LinkedHashMap). TreeSet (sorted, backed by TreeMap, O(log n)).",
+  ]},
+
+  {id:20,q:"Fail-fast vs fail-safe iterators with examples.",ans:[
+   "<strong>Fail-fast</strong>: modCount checked on every next(). Structural modification detected → ConcurrentModificationException. Best-effort — NOT reliable for concurrent modification.",
+   "<strong>All java.util collections</strong> use fail-fast iterators (ArrayList, HashMap, HashSet, etc.).",
+   "<strong>Safe removal in loop</strong>: iterator.remove() updates modCount. Or list.removeIf() (Java 8+). Never use list.remove() inside for-each.",
+   "<strong>CopyOnWriteArrayList</strong>: Fail-safe via snapshot. Write creates new array. Iterator always sees original snapshot. Never throws CME. Use for rare-write listener lists.",
+   "<strong>ConcurrentHashMap</strong>: Weakly consistent iterator. Never throws CME. May or may not see concurrent modifications. Always completes.",
+  ],code:`// Correct removal during iteration:
+Iterator<String> it = list.iterator();
+while (it.hasNext()) {
+    if (it.next().startsWith("A")) it.remove(); // safe
+}
+// Or Java 8+:
+list.removeIf(s -> s.startsWith("A")); // internally uses iterator.remove()`},
+
+  {id:21,q:"ArrayList vs LinkedList vs CopyOnWriteArrayList — internal structure and use cases.",ans:[
+   "<strong>ArrayList</strong>: Contiguous Object[]. O(1) random access. O(1) amortized add-tail. O(n) mid-insert/delete. Excellent cache locality. 50% growth. Default choice.",
+   "<strong>LinkedList</strong>: Doubly-linked Node objects. O(1) head/tail add/remove (as Deque). O(n) get by index. ~40 bytes/node vs ~8 bytes/slot. Poor cache locality. Almost always worse than ArrayList in benchmarks.",
+   "<strong>CopyOnWriteArrayList</strong>: Every write = full O(n) array copy. Lock-free reads (volatile array reference). Iterator never throws CME (reads snapshot). Use for event listener lists, rarely-modified config.",
+   "<strong>ArrayDeque</strong>: For queue/stack patterns — prefer over LinkedList. Circular array, O(1) both ends, cache-friendly, zero per-element overhead.",
+  ]},
+
+  {id:22,q:"How does PriorityQueue work internally? What is a binary heap?",ans:[
+   "<strong>Binary min-heap</strong>: Complete binary tree stored in array. Root = minimum. Parent at index i → left child at 2i+1, right child at 2i+2.",
+   "<strong>offer()/add()</strong>: Append at end, sift up (swap with parent while smaller). O(log n).",
+   "<strong>poll()</strong>: Remove root (min), move last element to root, sift down (swap with smaller child). O(log n).",
+   "<strong>peek()</strong>: Return root. O(1). No removal.",
+   "<strong>Floyd heapify</strong>: Build heap from collection in O(n) — better than n individual inserts O(n log n).",
+   "<strong>Max-heap</strong>: new PriorityQueue&lt;&gt;(Comparator.reverseOrder()). Not thread-safe — use PriorityBlockingQueue.",
+  ]},
+
+  {id:23,q:"WeakHashMap, IdentityHashMap, and EnumMap use cases.",ans:[
+   "<strong>WeakHashMap</strong>: Keys held by WeakReference. When key GC'd → entry auto-removed. Use for caches where entries should expire with the key (metadata, computed views, listener registries).",
+   "<strong>IdentityHashMap</strong>: Uses == and System.identityHashCode() for keys. Two equal objects = different keys. Use for: object graph traversal (cycle detection), proxy tracking, visited-node sets.",
+   "<strong>EnumMap</strong>: Array indexed by enum ordinal. O(1) access with zero hashing/boxing. Always use instead of HashMap&lt;EnumType, V&gt;. Iteration in declaration order.",
+  ],code:`// EnumMap — fastest possible Map for enum keys:
+EnumMap<DayOfWeek, List<Meeting>> calendar = new EnumMap<>(DayOfWeek.class);
+// Internally: vals[DayOfWeek.MONDAY.ordinal()] — direct array access
+
+// WeakHashMap — cache that auto-clears:
+WeakHashMap<Connection, ConnectionStats> stats = new WeakHashMap<>();
+// When Connection is GC'd: stats entry auto-removed — no manual cleanup`},
+
+  {id:24,q:"Time complexity of operations in HashMap, TreeMap, LinkedHashMap.",ans:[
+   "<strong>HashMap</strong>: get/put/remove/containsKey: O(1) avg, O(log n) worst (Java 8+ treeified). Iteration: O(capacity+n) — includes empty buckets.",
+   "<strong>LinkedHashMap</strong>: Same O(1) avg as HashMap. Iteration: O(n) — follows linked list, skips empty buckets.",
+   "<strong>TreeMap</strong>: All basic ops O(log n). floorKey/ceilingKey O(log n). subMap/headMap/tailMap: O(log n) to create, O(k) to iterate. size() O(1).",
+   "<strong>containsValue()</strong>: O(n) for all three — no reverse index.",
+   "<strong>Choose TreeMap when</strong>: Need sorted iteration, range queries, min/max keys. Cannot replicate with HashMap without sorting the result.",
+  ]},
+
+  {id:25,q:"How would you design a thread-safe LRU cache in Java?",ans:[
+   "<strong>Data structures</strong>: ConcurrentHashMap for O(1) key lookup + Doubly LinkedList for O(1) LRU order (MRU at tail, LRU at head).",
+   "<strong>Sentinel nodes</strong>: Dummy head and tail eliminate all boundary condition checks in list operations.",
+   "<strong>Thread safety</strong>: ReentrantLock around all list mutations. ConcurrentHashMap.get() is lock-free. Lock only for moveToTail() and evict().",
+   "<strong>LinkedHashMap shortcut</strong>: new LinkedHashMap(cap, 0.75f, true) with removeEldestEntry() override. + synchronizedMap() for thread safety.",
+   "<strong>Production choice</strong>: Caffeine — W-TinyLFU policy (better hit rate than LRU), near-zero GC pressure, lock-free reads, async eviction, metrics.",
+  ],code:`// LinkedHashMap LRU (simplest thread-safe version):
+Map<K,V> lru = Collections.synchronizedMap(
+    new LinkedHashMap<K,V>(capacity, 0.75f, true) {
+        protected boolean removeEldestEntry(Map.Entry e) {
+            return size() > capacity;
+        }
+    }
+);`},
+
+  {id:26,q:"Difference between Comparable and Comparator. When to use which?",ans:[
+   "<strong>Comparable</strong>: Implemented by the class itself (compareTo). Natural ordering. Used by Collections.sort, TreeMap, PriorityQueue by default.",
+   "<strong>Comparator</strong>: External ordering strategy. Multiple orderings for same class. Passed to sort/TreeMap at use site. Lambda-friendly.",
+   "<strong>Java 8 Comparator chain</strong>: Comparator.comparing(Employee::getDept).thenComparingInt(Employee::getSalary).reversed()",
+   "<strong>nullsFirst/nullsLast</strong>: Handle null values gracefully. Predicate.not() for negation.",
+   "<strong>Use Comparable when</strong>: one obvious natural order, class is yours. <strong>Use Comparator when</strong>: multiple orderings needed, class is third-party, ordering is dynamic/contextual.",
+  ]},
+
+  {id:27,q:"What happens if two keys have the same hashCode in HashMap?",ans:[
+   "Keys land in same bucket. Stored as linked list (Java &lt; 8) or red-black tree (Java 8+, after TREEIFY_THRESHOLD=8).",
+   "<strong>Lookup</strong>: 1st check: hash == node.hash (fast int compare). 2nd check: key.equals(node.key) (equality). Must traverse entire chain.",
+   "<strong>Pre-Java 8 O(n) worst case</strong>: Hash flooding DDoS — craft all keys with same hashCode → all in one bucket → every get() is O(n).",
+   "<strong>Java 8 treeification</strong>: Caps worst case at O(log n). Security mitigated but hashCode quality still critical for performance.",
+  ]},
+
+  {id:28,q:"How does HashMap handle collisions? What is the threshold for treeification (default 8)?",ans:[
+   "<strong>Collision handling</strong>: Separate chaining — each bucket is a linked list (Node) or red-black tree (TreeNode).",
+   "<strong>TREEIFY_THRESHOLD = 8</strong>: Poisson distribution at load 0.75 gives P(8+ entries per bucket) ≈ 0.00000006. If triggered: your hashCode() is broken.",
+   "<strong>UNTREEIFY_THRESHOLD = 6</strong>: Hysteresis prevents thrashing. 2-entry gap: must grow to 8 to treeify, must shrink to 6 to untreeify.",
+   "<strong>MIN_TREEIFY_CAPACITY = 64</strong>: If total table &lt; 64 buckets, resize instead of treeify — more buckets fix clustering at root.",
+   "<strong>TreeNode memory</strong>: ~2x Node size. Red-black tree chosen over AVL — fewer rotations on insert/delete at similar lookup cost.",
+  ]},
+
+  {id:29,q:"Explain immutable collections in Java 9+ (List.of(), Map.of()).",ans:[
+   "<strong>Factory methods</strong>: List.of(), Set.of(), Map.of() (up to 10 pairs), Map.ofEntries(). All mutations throw UnsupportedOperationException.",
+   "<strong>Not backed by ArrayList/HashMap</strong>: Custom compact implementations. ~50% less memory than HashSet. Specialized classes for 0, 1, 2 elements (no array allocation).",
+   "<strong>No null elements</strong>: NullPointerException thrown. Deliberate — nulls in collections are almost always bugs.",
+   "<strong>Set/Map iteration order</strong>: Intentionally randomized between JVM runs. Prevents accidental order dependence in code.",
+   "<strong>Collections.unmodifiableList() vs List.of()</strong>: unmodifiableList is a VIEW — underlying mutable list can still change. List.of() is truly immutable — no backing mutable collection.",
+  ]},
+
+  {id:30,q:"What are Spliterators and how do they help in parallel streams?",ans:[
+   "<strong>Spliterator</strong>: Iterator + trySplit() + estimateSize() + characteristics(). Three roles: traverse, split, describe.",
+   "<strong>trySplit()</strong>: Splits remaining elements into two halves. ForkJoinPool calls this recursively to distribute work across carrier threads.",
+   "<strong>Characteristics bitmask</strong>: ORDERED, SIZED, DISTINCT, SORTED, NONNULL, IMMUTABLE. Stream uses these to skip redundant operations (e.g., skip sort() if SORTED).",
+   "<strong>ArrayList spliterator</strong>: O(1) split (pure arithmetic: mid = start + (end-start)/2). Ideal for parallel. SUBSIZED characteristic.",
+   "<strong>LinkedList spliterator</strong>: O(n) to find midpoint. Poor for parallel — defeats the purpose.",
+  ]},
+ ]},
+
+ {cat:"🔴 Multithreading & Concurrency",id:"concurrency",items:[
+  {id:31,q:"Thread lifecycle. Difference between wait(), sleep(), yield(), join().",ans:[
+   "<strong>States</strong>: NEW → RUNNABLE → BLOCKED (waiting for monitor) / WAITING (indefinite) / TIMED_WAITING → TERMINATED.",
+   "<strong>wait()</strong>: Must be inside synchronized. Releases monitor lock. Thread enters WAITING. Woken by notify()/notifyAll(). Always in while loop (spurious wakeup protection).",
+   "<strong>sleep()</strong>: Does NOT release any locks. TIMED_WAITING. Static — sleeps current thread. Interruptible.",
+   "<strong>yield()</strong>: Stays RUNNABLE. Hint to scheduler (can ignore). No lock release. Rarely useful in application code.",
+   "<strong>join()</strong>: Current thread waits for target to terminate. WAITING (or TIMED_WAITING with timeout). Does not release locks.",
+  ],code:`synchronized(obj) {
+    while (!ready) obj.wait(); // while not if — spurious wakeup safety
+    process();
+}
+// WRONG: Thread.sleep() inside synchronized holds lock for sleep duration
+// CORRECT: obj.wait() releases lock during sleep`},
+
+  {id:32,q:"What is the difference between synchronized and ReentrantLock?",ans:[
+   "<strong>synchronized</strong>: Auto-release on block exit (even exceptions). JVM-optimized (biased/thin locks, lock elision). Non-interruptible blocking. One implicit condition. No timeout.",
+   "<strong>ReentrantLock</strong>: Manual unlock in finally. tryLock(timeout), lockInterruptibly(), fair mode, multiple Conditions, getQueueLength(), isLocked().",
+   "<strong>Multiple Conditions</strong>: notFull.signal() wakes only producers. notEmpty.signal() wakes only consumers. synchronized's notifyAll() wakes everyone — wasteful.",
+   "<strong>Fair mode</strong>: new ReentrantLock(true) → FIFO → prevents starvation → lower throughput.",
+   "<strong>Rule</strong>: Use synchronized by default. Switch to ReentrantLock when you need tryLock, interruptible waits, multiple conditions, or fairness.",
+  ]},
+
+  {id:33,q:"Explain volatile keyword and its use cases. Does it guarantee atomicity?",ans:[
+   "<strong>Guarantees</strong>: (1) Visibility — write immediately visible to all threads. (2) Ordering — no reordering across volatile access (memory barriers).",
+   "<strong>Does NOT guarantee atomicity</strong>: count++ on volatile int = 3 ops (read-increment-write). Race condition still possible. Use AtomicInteger.",
+   "<strong>Use cases</strong>: Stop flags (single write, single read), DCL instance field, publishing immutable objects, one-time state transitions (false → true).",
+   "<strong>Piggybacking</strong>: All writes before volatile write are visible to threads reading the volatile. Enables communicating compound state changes via a single flag.",
+  ],code:`volatile boolean stopped = false; // CORRECT: single read, single write
+// INCORRECT: stopped++ — not atomic even with volatile
+// Use AtomicBoolean for CAS operations on boolean
+// Use AtomicInteger for counter that needs atomic increment`},
+
+  {id:34,q:"Double-checked locking pattern for singleton. Why do we need volatile?",ans:[
+   "<strong>Problem without volatile</strong>: JIT can reorder steps of new Singleton(): 1) allocate memory, 2) assign reference, 3) initialize. Another thread sees non-null reference before initialization completes.",
+   "<strong>volatile prevents reordering</strong>: StoreStore fence ensures constructor completes before reference is visible to other threads.",
+   "<strong>Pre-Java 5</strong>: DCL was broken even with volatile — old JMM didn't guarantee sufficient ordering.",
+   "<strong>Bill Pugh Holder</strong>: Simpler and more elegant — inner static class loaded lazily by JVM's class loading (thread-safe by specification). No volatile needed.",
+   "<strong>Enum Singleton</strong>: Serialization safe (automatic), reflection safe (JVM prohibits), clone safe. Josh Bloch's recommended approach.",
+  ],code:`// DCL (use only if needed):
+private static volatile Singleton instance;
+public static Singleton getInstance() {
+    if (instance == null) {
+        synchronized (Singleton.class) {
+            if (instance == null) instance = new Singleton();
+        }
+    }
+    return instance;
+}
+
+// Bill Pugh (preferred):
+private static class Holder {
+    static final Singleton INSTANCE = new Singleton();
+}
+public static Singleton getInstance() { return Holder.INSTANCE; }`},
+
+  {id:35,q:"Explain ThreadLocal — internal working, memory leaks in thread pools.",ans:[
+   "<strong>Architecture</strong>: Each Thread holds ThreadLocalMap. ThreadLocal instance is the KEY. Value is stored in the map. ThreadLocal is just an accessor.",
+   "<strong>Weak key</strong>: ThreadLocalMap.Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt;. If ThreadLocal GC'd → key=null. Value still strongly held → LEAK.",
+   "<strong>Thread pool danger</strong>: Threads reused. ThreadLocal set for request A survives into request B. Stale context + memory leak.",
+   "<strong>Fix</strong>: Always call ThreadLocal.remove() in finally block. Spring's RequestContextFilter does this automatically.",
+   "<strong>Java 21 alternative</strong>: ScopedValue — immutable, lexically bounded, auto-cleared, inheritable by child virtual threads.",
+  ],code:`static final ThreadLocal<RequestContext> CTX = new ThreadLocal<>();
+// Correct pattern:
+CTX.set(new RequestContext(req));
+try {
+    processRequest();
+} finally {
+    CTX.remove(); // CRITICAL — prevents leak AND context contamination across requests
+}`},
+
+  {id:36,q:"Difference between Runnable, Callable, and Future.",ans:[
+   "<strong>Runnable</strong>: void run(). No return value, no checked exceptions. Works with Thread and ExecutorService.",
+   "<strong>Callable&lt;V&gt;</strong>: V call() throws Exception. Returns value, can throw checked exceptions. ExecutorService.submit() → Future&lt;V&gt;.",
+   "<strong>Future&lt;V&gt;</strong>: Handle to async result. get() blocks (always use get(timeout)!). ExecutionException wraps task exception — call getCause(). cancel(mayInterrupt).",
+   "<strong>Limitations</strong>: No callbacks, no composition, no chaining → use CompletableFuture.",
+   "<strong>invokeAll()</strong>: Submit all Callables, block until all complete. invokeAny(): return first success, cancel rest.",
+  ]},
+
+  {id:37,q:"What is CompletableFuture? Explain thenApply, thenCompose, thenCombine, allOf.",ans:[
+   "<strong>thenApply</strong>: Synchronous transform. T → U. Like Stream.map(). Returns CF&lt;U&gt;.",
+   "<strong>thenApplyAsync</strong>: Transform on different thread. Use for CPU-heavy transforms.",
+   "<strong>thenCompose</strong>: Chain dependent async ops. T → CF&lt;U&gt;, flattened to CF&lt;U&gt;. Like Stream.flatMap(). Prevents CF&lt;CF&lt;U&gt;&gt;.",
+   "<strong>thenCombine</strong>: Combine TWO independent futures when both complete. BiFunction&lt;T,U,V&gt;.",
+   "<strong>allOf</strong>: CF&lt;Void&gt; completes when ALL complete. Retrieve results from individual futures via join().",
+   "<strong>exceptionally</strong>: Recover from failure. handle: transform result OR exception. whenComplete: side-effect, passes through.",
+  ],code:`// Complete pipeline:
+CompletableFuture.supplyAsync(() -> fetchUser(id), executor)   // CF<User>
+    .thenCompose(user -> fetchOrdersAsync(user.getId()))        // CF<Orders>
+    .thenCombine(fetchInventoryAsync(id), (orders, inv) -> build(orders, inv))
+    .orTimeout(5, TimeUnit.SECONDS)   // Java 9+
+    .exceptionally(ex -> fallback()); // recovery
+
+// Fan-out then collect:
+var futures = ids.stream()
+    .map(id -> CompletableFuture.supplyAsync(() -> fetch(id), executor))
+    .toList();
+CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
+    .thenApply(v -> futures.stream().map(CompletableFuture::join).toList());`},
+
+  {id:38,q:"Explain ExecutorService types: FixedThreadPool, CachedThreadPool, ScheduledThreadPool, WorkStealingPool.",ans:[
+   "<strong>FixedThreadPool(n)</strong>: n threads, unbounded LinkedBlockingQueue. DANGER: unbounded queue → OOM under sustained load. Good for CPU-bound with known concurrency.",
+   "<strong>CachedThreadPool</strong>: 0 core, Integer.MAX_VALUE max, SynchronousQueue, 60s idle timeout. DANGER: slow tasks → thread explosion → OOM. Only for short-lived tasks with variable rate.",
+   "<strong>ScheduledThreadPool(n)</strong>: scheduleAtFixedRate (period from start) vs scheduleWithFixedDelay (period from completion). SILENT exception kills the task — always wrap in try-catch!",
+   "<strong>WorkStealingPool</strong>: ForkJoinPool with work stealing. Per-thread deques. DAEMON threads. Good for recursive/parallel CPU work.",
+   "<strong>Production rule</strong>: Use ThreadPoolExecutor directly — bounded ArrayBlockingQueue, named threads, CallerRunsPolicy for backpressure.",
+  ],code:`// Production-grade thread pool:
+new ThreadPoolExecutor(
+    20, 50,                              // core, max threads
+    60, TimeUnit.SECONDS,                // keepAlive for non-core
+    new ArrayBlockingQueue<>(500),       // BOUNDED queue
+    r -> { Thread t = new Thread(r, "payment-worker-" + counter.getAndIncrement()); return t; },
+    new ThreadPoolExecutor.CallerRunsPolicy() // backpressure: caller executes
+);`},
+
+  {id:39,q:"How does ForkJoinPool work? Explain the work-stealing algorithm.",ans:[
+   "<strong>Per-thread deques</strong>: Each worker has own double-ended deque. Pushes/pops own tasks from HEAD (LIFO — better cache locality). Idle threads steal from TAIL (FIFO) of other deques.",
+   "<strong>Why LIFO/FIFO split</strong>: Owner pops newest (hot cache data). Stealers take oldest (largest tasks — more work per steal, less coordination).",
+   "<strong>join() non-blocking</strong>: Instead of blocking, waiting thread executes other tasks from its deque. Prevents starvation in deep recursion.",
+   "<strong>Pattern</strong>: Fork one sub-task, compute other directly, join the forked one. Avoids creating task for current thread.",
+   "<strong>commonPool()</strong>: Shared by parallel streams, CompletableFuture. Don't submit blocking or long tasks here — starves entire application.",
+  ],code:`class SumTask extends RecursiveTask<Long> {
+    protected Long compute() {
+        if (end - start <= THRESHOLD) return sumDirectly();
+        SumTask left = new SumTask(array, start, mid);
+        left.fork();                      // push to deque
+        long rightResult = new SumTask(array, mid, end).compute(); // compute directly
+        return left.join() + rightResult; // join (helps with other tasks while waiting)
+    }
+}`},
+
+  {id:40,q:"Difference between CountDownLatch, CyclicBarrier, Semaphore, Phaser.",ans:[
+   "<strong>CountDownLatch</strong>: One-shot countdown. await() blocks until count=0. Any thread calls countDown(). Cannot reset. Use: 'wait for N services to start'.",
+   "<strong>CyclicBarrier</strong>: N threads must all arrive. Optional barrier action runs when all arrive. Auto-resets (cyclic). Use: 'N workers sync at each simulation step'.",
+   "<strong>Semaphore</strong>: N permits. acquire() blocks if 0. release() from any thread. Fair mode prevents starvation. Binary semaphore ≠ mutex (non-reentrant, any thread can release).",
+   "<strong>Phaser</strong>: Dynamic parties (register/deregister). Multiple phases with custom onAdvance(). Hierarchical tiers for massive parallelism. Most flexible.",
+  ]},
+
+  {id:41,q:"Explain producer-consumer problem using BlockingQueue.",ans:[
+   "<strong>BlockingQueue solution</strong>: put() blocks when full. take() blocks when empty. All coordination handled internally — no synchronized, wait(), notifyAll() needed.",
+   "<strong>ArrayBlockingQueue</strong>: Bounded, single lock. Predictable memory. <strong>LinkedBlockingQueue</strong>: Optional bound, separate put/take locks — higher throughput.",
+   "<strong>SynchronousQueue</strong>: Zero capacity — direct handoff. Producer blocks until consumer ready. Used by CachedThreadPool.",
+   "<strong>Poison pill shutdown</strong>: Producer sends sentinel (one per consumer). Consumer exits on receipt.",
+   "<strong>drainTo()</strong>: Atomically drain available elements for batch processing. Combine with take() for efficient batching.",
+  ],code:`BlockingQueue<Task> queue = new ArrayBlockingQueue<>(1000); // bounded!
+// Producer:
+while (!stopped) { queue.put(generateTask()); } // blocks if full — backpressure
+// Consumer:
+while (true) { Task t = queue.take(); if (t == POISON) break; process(t); }`},
+
+  {id:42,q:"What are atomic classes (AtomicInteger, AtomicReference)? Explain CAS operation.",ans:[
+   "<strong>CAS (Compare-And-Swap)</strong>: Single hardware instruction. Atomically: if *addr == expected, set *addr = new, return true; else return false.",
+   "<strong>Spin loop</strong>: Read → compute new value → CAS. If CAS fails (race condition), retry. Lock-free — no thread blocking.",
+   "<strong>AtomicInteger</strong>: incrementAndGet, getAndSet, compareAndSet, updateAndGet(Function), accumulateAndGet(value, BinaryOperator).",
+   "<strong>AtomicReference</strong>: Atomic reference swap. compareAndSet uses == not equals. Good for publishing new immutable config atomically.",
+   "<strong>ABA problem</strong>: Value A→B→A between read and CAS — CAS sees A==A and succeeds but missed intermediate state. Fix: AtomicStampedReference (version counter).",
+  ]},
+
+  {id:43,q:"What is LongAdder vs AtomicLong? When to use which?",ans:[
+   "<strong>AtomicLong</strong>: Single volatile long + CAS. Under high contention: many threads spin on failed CAS → CPU waste. O(1) exact read.",
+   "<strong>LongAdder</strong>: Distributed counter — base value + per-thread Cell[] array (padded with @Contended to prevent false sharing). Sum = base + all cells.",
+   "<strong>sum() is approximate</strong>: Cells summed sequentially while others may update — not a point-in-time snapshot.",
+   "<strong>Use AtomicLong</strong>: Need exact reads, CAS operations, sequence numbers, version counters, optimistic locking.",
+   "<strong>Use LongAdder</strong>: High-contention counters where approximate reads OK — metrics, hit counts, rate tracking. Near-linear scaling with thread count.",
+  ]},
+
+  {id:44,q:"Explain deadlock, livelock, and starvation with code examples. How to detect deadlock?",ans:[
+   "<strong>Deadlock</strong>: Circular lock dependency. Thread A holds L1 waits L2, Thread B holds L2 waits L1. CPU=0%, threads blocked forever.",
+   "<strong>Detection</strong>: jstack &lt;pid&gt; — look for BLOCKED threads. ThreadMXBean.findDeadlockedThreads(). JConsole/JMC deadlock button.",
+   "<strong>Prevention</strong>: Always acquire locks in same global order. ReentrantLock.tryLock(timeout). Avoid nested locks.",
+   "<strong>Livelock</strong>: Threads actively running but no progress (yielding to each other indefinitely). CPU=100%. Fix: randomized backoff.",
+   "<strong>Starvation</strong>: Low-priority thread never gets CPU. Fix: ReentrantLock(true) fair mode, PriorityBlockingQueue, monitor wait times.",
+  ]},
+
+  {id:45,q:"What is ReadWriteLock and StampedLock? When to use them?",ans:[
+   "<strong>ReadWriteLock</strong>: Multiple concurrent readers OR one exclusive writer. readLock() / writeLock() from ReentrantReadWriteLock. Writer starvation possible under heavy reads.",
+   "<strong>Lock downgrade</strong>: Acquire readLock while holding writeLock → release writeLock. Safe downgrade. Upgrade (read→write) not supported — deadlock risk.",
+   "<strong>StampedLock (Java 8+)</strong>: Three modes: write (exclusive), read (shared), optimistic read (no lock — just validate afterward).",
+   "<strong>Optimistic read pattern</strong>: long stamp = sl.tryOptimisticRead(); read fields; if (!sl.validate(stamp)) fall back to readLock(). Near-zero cost on success.",
+   "<strong>StampedLock limitations</strong>: NOT reentrant. No Condition variables. Can pin virtual threads (Java 21). Not interruptible by default.",
+  ],code:`StampedLock sl = new StampedLock();
+// Optimistic read (fastest):
+long stamp = sl.tryOptimisticRead();
+double x = this.x, y = this.y; // read data
+if (!sl.validate(stamp)) { // check if write happened
+    stamp = sl.readLock(); // fall back to real lock
+    try { x = this.x; y = this.y; } finally { sl.unlockRead(stamp); }
+}
+return Math.sqrt(x*x + y*y);`},
+
+  {id:49,q:"How would you implement a rate limiter in Java (token bucket / leaky bucket)?",ans:[
+   "<strong>Token bucket</strong>: Tokens accumulate at refillRate up to capacity. Each request consumes one token. Allows bursting. Lazy refill: compute tokens since last access.",
+   "<strong>Thread safety</strong>: synchronized block around tryAcquire() and refill(). Or AtomicLong with CAS spin loop for lock-free implementation.",
+   "<strong>Per-client rate limiting</strong>: ConcurrentHashMap&lt;clientId, RateLimiter&gt; + Caffeine eviction to remove inactive clients.",
+   "<strong>Distributed</strong>: Redis Lua script for atomic token bucket across multiple instances. SET NX for distributed lock.",
+   "<strong>Guava RateLimiter</strong>: RateLimiter.create(10.0) — 10 permits/sec. tryAcquire() non-blocking. acquire() blocking.",
+  ]},
+
+  {id:50,q:"Virtual threads (Java 21) — how do they differ from platform threads? Use cases.",ans:[
+   "<strong>Platform threads</strong>: 1:1 OS thread mapping. ~1MB native stack. Creating thousands → OOM or OS limit. Blocking I/O = OS thread idle.",
+   "<strong>Virtual threads</strong>: M:N on carrier threads (≈ CPU count). ~KB heap stack (grows dynamically). Millions possible. Blocking I/O = unmount VT, carrier thread freed.",
+   "<strong>Pinning</strong>: synchronized blocks prevent unmounting (thread-local native frame). Replace with ReentrantLock. Java 24 largely eliminates pinning.",
+   "<strong>Don't pool VTs</strong>: Cheap to create — Executors.newVirtualThreadPerTaskExecutor() creates one per task.",
+   "<strong>Spring Boot 3.2+</strong>: spring.threads.virtual.enabled=true → Tomcat workers become virtual threads. Zero code changes needed.",
+   "<strong>Use VTs for</strong>: I/O-bound services (DB, HTTP, files). Avoid for CPU-bound (use ForkJoinPool instead).",
+  ]},
+ ]},
+
+ {cat:"⚡ JVM Internals & Performance",id:"jvm",items:[
+  {id:51,q:"Explain JVM memory areas: Heap, Stack, Metaspace, PC Register, Native Method Stack.",ans:[
+   "<strong>Heap (shared)</strong>: All objects + arrays. GC-managed. Young Gen (Eden, S0, S1) + Old Gen (Tenured).",
+   "<strong>Stack (per-thread)</strong>: Stack frames — local variables, operand stack, reference to constant pool. StackOverflowError on deep recursion.",
+   "<strong>Metaspace (Java 8+, native memory)</strong>: Class definitions, method bytecode, constant pool. Not bounded by default. OOM: Metaspace.",
+   "<strong>PC Register (per-thread)</strong>: Address of current bytecode instruction. Never causes OOM — only member of that club.",
+   "<strong>Native Method Stack (per-thread)</strong>: Execution frames for JNI. Combined with JVM stack in HotSpot.",
+   "<strong>Code Cache (native)</strong>: JIT-compiled native machine code. When full: JIT stops compiling → performance cliff. Tune: -XX:ReservedCodeCacheSize=512m.",
+  ]},
+
+  {id:52,q:"Explain generational garbage collection. Young Gen, Old Gen, Survivor spaces.",ans:[
+   "<strong>Weak generational hypothesis</strong>: ~80-90% of objects die young. Generational GC exploits this — collect Young Gen frequently, Old Gen rarely.",
+   "<strong>Eden allocation</strong>: Bump-pointer. Extremely fast. TLAB per thread (no synchronization for allocation). New objects land here.",
+   "<strong>Minor GC (copy algorithm)</strong>: Live objects from Eden+from-Survivor copied to to-Survivor. Ages incremented. Dead objects = just clear Eden (no scanning needed).",
+   "<strong>Promotion</strong>: Objects surviving MaxTenuringThreshold (default 15) or Survivor overflow → promoted to Old Gen.",
+   "<strong>Card table</strong>: Tracks Old→Young references. Dirty card = potential cross-generational reference. Minor GC scans only dirty cards (not all of Old Gen).",
+  ]},
+
+  {id:53,q:"Compare GC algorithms: Serial, Parallel, CMS, G1, ZGC, Shenandoah.",ans:[
+   "<strong>Serial</strong>: Single-thread STW. Minimal overhead. For small heaps &lt;200MB or single-core containers.",
+   "<strong>Parallel</strong>: Multi-thread STW. Maximum throughput. For batch/ETL jobs where pauses are acceptable.",
+   "<strong>G1 (default Java 9+)</strong>: Region-based heap. Concurrent marking. Predictable pause target (MaxGCPauseMillis=200, soft target). Region-level mixed collections.",
+   "<strong>ZGC (Java 15+ stable)</strong>: Colored pointers + load barriers. Concurrent compact. Pauses &lt;1ms regardless of heap size. Cost: ~5-15% throughput overhead.",
+   "<strong>Shenandoah</strong>: Forwarding pointers. Concurrent compact. OpenJDK flagship. Similar pause profile to ZGC.",
+   "<strong>Java 21</strong>: -XX:+UseZGC -XX:+ZGenerational — generational ZGC for best throughput + latency.",
+  ]},
+
+  {id:55,q:"What are common OOM errors? How do you troubleshoot GC Overhead Limit Exceeded?",ans:[
+   "<strong>Java heap space</strong>: Heap exhausted. Memory leak or heap too small. Diagnosis: heap dump → Eclipse MAT → Dominator Tree → Path to GC Roots.",
+   "<strong>GC Overhead Limit Exceeded</strong>: JVM spent &gt;98% time in GC recovering &lt;2% heap. Heap nearly full, GC can't free enough. Almost always = memory leak.",
+   "<strong>Metaspace</strong>: Class loading (too many classes or classloader leak). Check: jcmd VM.metaspace, classloader count trend.",
+   "<strong>Direct buffer memory</strong>: ByteBuffer.allocateDirect() exhausted. Fix: -XX:MaxDirectMemorySize or fix buffer lifecycle.",
+   "<strong>Unable to create native thread</strong>: OS thread limit. Reduce pool sizes or increase ulimit.",
+   "<strong>Production must-haves</strong>: -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/dumps/ -XX:+ExitOnOutOfMemoryError",
+  ]},
+
+  {id:58,q:"What is escape analysis and scalar replacement in JIT?",ans:[
+   "<strong>Escape analysis</strong>: JIT determines if an object reference can be accessed outside creating method/thread. Three levels: no escape, thread escape, global escape.",
+   "<strong>Scalar replacement</strong>: For non-escaping objects — decompose into individual field variables (scalars) in CPU registers. Zero heap allocation, zero GC pressure.",
+   "<strong>Lock elision</strong>: For thread-confined objects — synchronized blocks removed entirely (no other thread can see the object).",
+   "<strong>Stack allocation</strong>: Non-escaping objects allocated on stack frame — freed when method returns, no GC involvement.",
+   "<strong>Requirement</strong>: Method must be inlined for escape analysis to work across call boundaries. Keep methods small.",
+  ]},
+ ]},
+
+ {cat:"☕ Java 8–21 Features",id:"java8",items:[
+  {id:66,q:"Explain functional interfaces. Difference between Function, Predicate, Consumer, Supplier.",ans:[
+   "<strong>Functional interface</strong>: Exactly one abstract method (SAM). @FunctionalInterface annotation optional but recommended.",
+   "<strong>Function&lt;T,R&gt;</strong>: apply(T) → R. Transform/map. Compose with andThen (f then g) or compose (g then f).",
+   "<strong>Predicate&lt;T&gt;</strong>: test(T) → boolean. Filter. Combine with and(), or(), negate(). Predicate.not() (Java 11+).",
+   "<strong>Consumer&lt;T&gt;</strong>: accept(T) → void. Side effect (forEach, logging, saving). Chain with andThen.",
+   "<strong>Supplier&lt;T&gt;</strong>: get() → T. Lazy factory. orElseGet (avoid eager default evaluation), ThreadLocal.withInitial.",
+   "<strong>BiFunction, UnaryOperator, BinaryOperator</strong>: Two-input and same-type variants.",
+  ]},
+
+  {id:68,q:"Explain Streams API — intermediate vs terminal operations, lazy evaluation.",ans:[
+   "<strong>Intermediate (lazy)</strong>: Return Stream. Not executed until terminal op. filter, map, flatMap, distinct, sorted, limit, skip, peek.",
+   "<strong>Terminal (eager, triggers execution)</strong>: Consume stream. collect, forEach, count, reduce, findFirst, findAny, anyMatch, allMatch, min, max, toArray.",
+   "<strong>Pipeline fusion</strong>: Elements processed one at a time through entire pipeline — no intermediate collections. filter+map = one pass.",
+   "<strong>Short-circuit terminals</strong>: findFirst, findAny, anyMatch, allMatch, noneMatch, limit — stop early. Crucial for infinite streams.",
+   "<strong>Barrier operations</strong>: sorted(), distinct() — must buffer ALL upstream elements before producing any output. Breaks element-at-a-time model.",
+  ]},
+
+  {id:69,q:"map vs flatMap — with example.",ans:[
+   "<strong>map</strong>: One input → one output. Function&lt;T,R&gt;. Element count preserved.",
+   "<strong>flatMap</strong>: One input → zero or more outputs (via Stream). Function&lt;T,Stream&lt;R&gt;&gt;. Flattens nested streams. Count changes.",
+   "<strong>Rule</strong>: If mapper returns a plain value → map. If mapper returns Stream/Optional/Collection → flatMap to flatten.",
+  ],code:`// Nested collection → flat:
+orders.stream()
+    .flatMap(o -> o.getItems().stream()) // Order → Stream<Item>
+    .collect(Collectors.toList());        // List<Item> across all orders
+
+// Optional in stream (Java 9+):
+userIds.stream()
+    .flatMap(id -> repo.findById(id).stream()) // empty Optional → empty stream
+    .collect(Collectors.toList());              // only found users
+
+// Wrong (using map produces Stream<Stream<Item>>):
+orders.stream().map(o -> o.getItems().stream()) // Stream<Stream<Item>>!`},
+
+  {id:71,q:"Explain Optional — proper usage and anti-patterns.",ans:[
+   "<strong>Purpose</strong>: Return type for methods that may legitimately have no result. Makes absence explicit in the API.",
+   "<strong>Pipeline style</strong>: map/flatMap/filter/orElse/orElseGet/orElseThrow/ifPresent/ifPresentOrElse/or (Java 9).",
+   "<strong>orElseGet vs orElse</strong>: orElse ALWAYS evaluates the default expression. orElseGet is lazy. Use orElseGet for expensive defaults.",
+   "<strong>Anti-patterns</strong>: Optional as field (not Serializable), Optional as parameter (awkward for callers), Optional in collections (use flatMap + stream instead).",
+   "<strong>isPresent()+get() = code smell</strong>: Use map/ifPresent/orElseThrow instead of manual check.",
+  ],code:`// Anti-pattern:
+if (opt.isPresent()) { User u = opt.get(); process(u); }
+// Correct:
+opt.ifPresent(this::process);
+
+// Chaining:
+return userRepo.findById(id)         // Optional<User>
+    .flatMap(User::getEmail)          // Optional<String>
+    .filter(e -> e.contains("@"))     // Optional<String>
+    .map(String::toLowerCase)         // Optional<String>
+    .orElse("no-email@unknown.com");`},
+
+  {id:75,q:"Records (Java 14+), Sealed classes (Java 17), Pattern matching (Java 21).",ans:[
+   "<strong>Records</strong>: Concise immutable data classes. Auto-generates: canonical constructor, accessors (name() not getName()), equals, hashCode, toString. Implicitly final.",
+   "<strong>Sealed classes</strong>: Restrict subtypes to a known set. Each must be final, sealed, or non-sealed. Enables exhaustive switch with compiler enforcement.",
+   "<strong>Pattern matching switch (Java 21)</strong>: Type patterns + guarded patterns + record deconstruction. Exhaustive for sealed types — add new subtype → compiler error at all switches.",
+   "<strong>Record patterns</strong>: case Point(int x, int y) → destructures components directly in pattern.",
+  ],code:`sealed interface Shape permits Circle, Rect {}
+record Circle(double r) implements Shape {}
+record Rect(double w, double h) implements Shape {}
+
+double area = switch (shape) {
+    case Circle(double r)          -> Math.PI * r * r;
+    case Rect(double w, double h)  -> w * h;
+    // No default needed — sealed ensures all cases covered
+    // Add Triangle to permits → compile error HERE
+};`},
+ ]},
+
+ {cat:"🎨 Design Patterns",id:"design",items:[
+  {id:79,q:"Explain SOLID principles with Java examples.",ans:[
+   "<strong>SRP (Single Responsibility)</strong>: One reason to change. UserService that validates + persists + emails = 3 reasons. Split into UserValidator, UserRepository, WelcomeEmailService.",
+   "<strong>OCP (Open/Closed)</strong>: Open for extension, closed for modification. switch on payment type = must modify for new types. Use PaymentStrategy interface — new type = new class.",
+   "<strong>LSP (Liskov Substitution)</strong>: Subclass substitutable for parent. Square extends Rectangle breaks LSP — setWidth affects height. ReadOnlyList.add() throws = LSP violation.",
+   "<strong>ISP (Interface Segregation)</strong>: Don't force unused method dependencies. Fat Machine interface (print+scan+fax) → split into Printer, Scanner, FaxMachine.",
+   "<strong>DIP (Dependency Inversion)</strong>: Depend on abstractions. OrderService using new MySQLRepository() → inject OrderRepository interface. Enables testing with mocks.",
+  ]},
+
+  {id:81,q:"Factory vs Abstract Factory vs Builder pattern.",ans:[
+   "<strong>Factory Method</strong>: Delegate instantiation to subclass/method. Decouples client from concrete type. New type = new creator. Examples: DriverManager.getConnection, BeanFactory.getBean.",
+   "<strong>Abstract Factory</strong>: Create FAMILIES of related objects. Ensures consistency — all components from same family. Switch families by swapping factory. Examples: JDBC drivers, UI toolkits.",
+   "<strong>Builder</strong>: Construct complex object step-by-step. Solves telescoping constructors. Cross-field validation at build(). Fluent API. Examples: StringBuilder, Lombok @Builder, HttpRequest.newBuilder().",
+   "<strong>Decision</strong>: Which concrete type → Factory. Which family of types → Abstract Factory. Complex optional params → Builder.",
+  ]},
+
+  {id:82,q:"Strategy vs Template Method vs Command pattern.",ans:[
+   "<strong>Strategy</strong>: Composition — hold reference to algorithm object, swap at runtime. Java 8: lambdas ARE strategies. Comparator, Predicate, Function are all strategies.",
+   "<strong>Template Method</strong>: Inheritance — final algorithm skeleton in base class, abstract hooks for subclasses. Prevents changing the flow. Spring's JdbcTemplate uses this.",
+   "<strong>Command</strong>: Encapsulate request as object. Enables undo/redo, queuing, scheduling, logging. Runnable is a command (no undo). Kafka messages are commands.",
+   "<strong>Modern preference</strong>: Strategy over Template Method — avoids deep inheritance hierarchies, lambdas make strategies trivial to create.",
+  ]},
+
+  {id:83,q:"Observer pattern — implement using Java PropertyChangeListener or reactive streams.",ans:[
+   "<strong>Core</strong>: Observable notifies all registered Observers on state change. Decouples producers from consumers.",
+   "<strong>PropertyChangeListener</strong>: Java beans standard. PropertyChangeSupport manages listeners. firePropertyChange(name, old, new) — only fires if value changed.",
+   "<strong>Spring ApplicationEvent</strong>: @EventListener methods. @Async for async delivery. @TransactionalEventListener — fires only after commit (critical for emails!).",
+   "<strong>Reactive (Project Reactor)</strong>: Flux/Sink with backpressure. Subscriber controls demand. Use for high-volume event streams with pipeline processing.",
+   "<strong>Memory leak danger</strong>: Observer registered but never removed keeps subject alive. Use WeakReference listeners or explicit lifecycle management.",
+  ]},
+
+  {id:84,q:"Decorator vs Proxy pattern — real-world examples in Java.",ans:[
+   "<strong>Decorator</strong>: Client explicitly wraps object to ADD behavior. Stackable (multiple decorators). Client chooses the wrapping. Examples: BufferedInputStream, Collections.unmodifiableList.",
+   "<strong>Proxy</strong>: Controls ACCESS to object. Client often unaware of proxy. Subject creation may be deferred (virtual proxy). Examples: Spring @Transactional beans, JDK Proxy.newProxyInstance.",
+   "<strong>Spring AOP proxy</strong>: Every @Transactional/@Cacheable/@Async bean is a proxy. JDK proxy (interface) or CGLIB subclass (no interface). postProcessAfterInitialization() is where proxy is created.",
+   "<strong>Self-invocation problem</strong>: this.method() bypasses proxy → @Transactional ignored. Fix: inject self, extract to separate bean.",
+   "<strong>Final classes/methods</strong>: CGLIB can't subclass — @Transactional silently ignored. Make classes non-final.",
+  ]},
+ ]},
+
+ {cat:"🌿 Spring & Microservices",id:"spring",items:[
+  {id:89,q:"Explain Spring IoC container. BeanFactory vs ApplicationContext.",ans:[
+   "<strong>IoC</strong>: Container creates + wires dependencies. You declare what you need; container provides it. DI is the mechanism.",
+   "<strong>BeanFactory</strong>: Lazy bean creation (on first getBean()). Minimal features. Rarely used directly.",
+   "<strong>ApplicationContext (use this)</strong>: Eager singletons at startup (fail-fast). Adds: events, i18n, resources, auto-registers BeanPostProcessors.",
+   "<strong>Bean lifecycle</strong>: Instantiate → inject deps → BPP.before → @PostConstruct → BPP.after → (PROXY CREATED HERE) → ready → @PreDestroy.",
+   "<strong>Key insight</strong>: @Transactional, @Async, @Cacheable proxies created in BeanPostProcessor.postProcessAfterInitialization(). The bean you @Autowire is the proxy.",
+  ]},
+
+  {id:91,q:"Explain Spring Boot autoconfiguration internals (@EnableAutoConfiguration, spring.factories).",ans:[
+   "<strong>Trigger</strong>: @SpringBootApplication → @EnableAutoConfiguration → imports AutoConfigurationImportSelector.",
+   "<strong>Registry</strong>: Reads META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports from all JARs on classpath. 140+ entries in spring-boot-autoconfigure.",
+   "<strong>Filtering</strong>: Each auto-config class has @Conditional annotations — only applied when conditions pass.",
+   "<strong>Key conditions</strong>: @ConditionalOnClass (JAR present?), @ConditionalOnMissingBean (user defined their own?), @ConditionalOnProperty.",
+   "<strong>Override</strong>: Define your own @Bean → @ConditionalOnMissingBean → autoconfiguration backs off. Your config wins.",
+   "<strong>Debug</strong>: --debug flag or /actuator/conditions endpoint shows all positive/negative match reasons.",
+  ]},
+
+  {id:92,q:"@Transactional — propagation levels, isolation levels, common pitfalls (self-invocation).",ans:[
+   "<strong>REQUIRED (default)</strong>: Join existing or create new. <strong>REQUIRES_NEW</strong>: Suspend outer, create independent (separate DB connection — watch pool exhaustion).",
+   "<strong>NESTED</strong>: Savepoint in outer transaction — partial rollback possible. <strong>MANDATORY</strong>: Must have active tx or throw.",
+   "<strong>Isolation levels</strong>: READ_COMMITTED (default PG/Oracle, no dirty reads). REPEATABLE_READ (default MySQL, no non-repeatable reads). SERIALIZABLE (strongest, lowest throughput).",
+   "<strong>CRITICAL: Only rolls back on RuntimeException</strong> by default! Use rollbackFor=Exception.class for checked exceptions.",
+   "<strong>Self-invocation pitfall</strong>: orderService.placeOrder() calls this.notifyUser() — calls real object, not proxy → @Transactional on notifyUser() is completely ignored.",
+   "<strong>Fix</strong>: Extract to separate @Service, or inject self (@Autowired OrderService self → use self.notifyUser()).",
+  ]},
+
+  {id:93,q:"How does Spring AOP work? Proxy-based vs AspectJ.",ans:[
+   "<strong>Spring AOP</strong>: Runtime proxy. JDK proxy for interfaces (Proxy.newProxyInstance), CGLIB subclass for classes (requires non-final).",
+   "<strong>Cannot intercept</strong>: private/static methods, constructors, self-invocations (bypass proxy).",
+   "<strong>@Around advice</strong>: try { result = pjp.proceed(); } catch {} finally {}. Must call proceed() to invoke actual method. Can modify args/result.",
+   "<strong>AspectJ</strong>: Bytecode weaving. Can intercept private, static, constructors, self-invocations. Requires ajc compiler or -javaagent:aspectjweaver.jar.",
+   "<strong>Custom aspect example</strong>: @Around + @annotation(myAnnotation) → intercept all methods annotated with @MyAnnotation.",
+  ],code:`@Aspect @Component
+public class TimingAspect {
+    @Around("@annotation(Timed)")
+    public Object time(ProceedingJoinPoint pjp) throws Throwable {
+        long start = System.currentTimeMillis();
+        try {
+            return pjp.proceed(); // call actual method
+        } finally {
+            metrics.record(pjp.getSignature().getName(),
+                System.currentTimeMillis() - start);
+        }
+    }
+}`},
+
+  {id:94,q:"Circuit breaker (Resilience4j), retry, bulkhead patterns in microservices.",ans:[
+   "<strong>Circuit Breaker states</strong>: CLOSED (normal) → OPEN (fail-fast, no calls) after failure rate &gt; threshold → HALF_OPEN (probe N calls) → CLOSED or OPEN.",
+   "<strong>Retry</strong>: Exponential backoff + jitter prevents thundering herd. Ignore client errors (4xx). Only retry transient errors (503, IOException).",
+   "<strong>Bulkhead (Semaphore)</strong>: Limit concurrent calls to downstream. Prevents thread pile-up from slow service.",
+   "<strong>Bulkhead (Thread pool)</strong>: Dedicated pool per downstream. Failure in one service can't exhaust threads for others.",
+   "<strong>Composition order</strong>: RateLimiter → Bulkhead → CircuitBreaker → Retry → call. Always provide meaningful fallback (cached data, default, graceful degradation).",
+  ]},
+
+  {id:96,q:"How to handle distributed transactions? Saga pattern (choreography vs orchestration).",ans:[
+   "<strong>Why not 2PC</strong>: Requires all services available, holds locks across services, violates CAP-P, single point of failure.",
+   "<strong>Saga</strong>: Sequence of local transactions. Each step has a compensating transaction (undo). Eventual consistency — not ACID.",
+   "<strong>Choreography</strong>: Event-driven. Services react to events and publish results. Decoupled. Hard to track full flow, debug, modify.",
+   "<strong>Orchestration</strong>: Central state machine sends commands. Easy to monitor (query saga state), debug, modify. Risk: coordinator becomes knowledge hub.",
+   "<strong>Transactional Outbox</strong>: Write event to outbox table in SAME DB transaction. Relay (Debezium CDC) publishes to Kafka. Atomic event publication.",
+   "<strong>Idempotency</strong>: At-least-once delivery → handlers must be idempotent. Store processed command IDs to deduplicate.",
+  ]},
+ ]},
+
+ {cat:"🗄 Databases, Caching & Architecture",id:"db",items:[
+  {id:97,q:"JPA/Hibernate — N+1 problem, lazy vs eager loading, @Fetch strategies, first-level vs second-level cache.",ans:[
+   "<strong>N+1 problem</strong>: 1 query for N parents + N queries for each child collection = N+1 total. Triggered by accessing lazy collection in a loop.",
+   "<strong>Solutions</strong>: JOIN FETCH in JPQL, @EntityGraph, @BatchSize (IN clause batches), @Fetch(SUBSELECT).",
+   "<strong>Eager on collections = danger</strong>: Multiple EAGER @OneToMany → Cartesian product → exponential result set size.",
+   "<strong>L1 cache (Session)</strong>: Per-transaction identity map. Same entity = same Java object. Dirty checking. Automatic. Cleared on session close.",
+   "<strong>L2 cache (shared)</strong>: Optional, across sessions. @Cache(usage=READ_WRITE). Best for read-mostly reference data. Invalidation strategy required.",
+  ],code:`// Fix N+1 with JOIN FETCH:
+@Query("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.items WHERE o.userId = :uid")
+List<Order> findByUserWithItems(@Param("uid") String uid);
+
+// Or @BatchSize — loads 25 collections per IN query:
+@OneToMany @BatchSize(size=25)
+private List<OrderItem> items;
+
+// Global batch size:
+spring.jpa.properties.hibernate.default_batch_fetch_size=25`},
+
+  {id:98,q:"How would you design idempotent REST APIs? Handle duplicate requests.",ans:[
+   "<strong>HTTP idempotency</strong>: GET, PUT, DELETE idempotent by spec. POST, PATCH are not.",
+   "<strong>Idempotency-Key header</strong>: Client generates UUID per logical operation (same key on retry). Server stores key→response. On duplicate: return stored response without re-executing.",
+   "<strong>Implementation</strong>: Unique DB index on idempotency_key. PROCESSING state handles concurrent duplicates. Hash request body to detect key reuse with different body.",
+   "<strong>Natural idempotency</strong>: PUT with client-provided ID (upsert). If-Match conditional updates with ETag/version.",
+   "<strong>Distributed</strong>: Redis SET NX with TTL for cross-instance idempotency. Lua script for atomic check-and-store.",
+  ],code:`// Idempotency-Key filter (simplified):
+String key = request.getHeader("Idempotency-Key");
+Optional<IdempotencyRecord> existing = repo.findByKey(key);
+if (existing.isPresent() && existing.get().isCompleted()) {
+    // Return stored response — no re-execution
+    response.setStatus(existing.get().getStatus());
+    response.getWriter().write(existing.get().getBody());
+    return;
+}
+// Otherwise: reserve key (INSERT with unique constraint), process, store result`},
+
+  {id:99,q:"Kafka vs RabbitMQ — when to use which? Exactly-once semantics in Kafka.",ans:[
+   "<strong>RabbitMQ</strong>: Smart broker. Messages deleted after consumption. Complex routing (exchanges, bindings, topics, headers). Priority queues. Good for: task distribution, RPC, fanout.",
+   "<strong>Kafka</strong>: Durable distributed log. Messages retained (days/bytes). Multiple independent consumer groups at different offsets. Replay from any point. Good for: event sourcing, CDC, streaming, audit logs.",
+   "<strong>Exactly-once (Kafka)</strong>: Idempotent producer (sequence numbers deduplicate retries) + Transactions (atomic multi-partition write + offset commit).",
+   "<strong>Transactional pattern</strong>: beginTransaction() → send() → sendOffsetsToTransaction() → commitTransaction(). Abort rolls back all.",
+   "<strong>Exactly-once scope</strong>: Only within Kafka itself. External effects (DB writes) still need application-level idempotency.",
+  ]},
+
+  {id:100,q:"Explain CAP theorem and how it applies to systems you've designed. Consistency patterns.",ans:[
+   "<strong>CAP</strong>: Distributed system can guarantee 2 of: Consistency (all reads return latest write), Availability (every request gets a response), Partition Tolerance (survives network splits). P is mandatory → real choice: CP or AP.",
+   "<strong>CP examples</strong>: Zookeeper, etcd, HBase. Unavailable during partition rather than serve inconsistent data.",
+   "<strong>AP examples</strong>: Cassandra, DynamoDB (eventual), CouchDB. Available during partition; replicas converge eventually.",
+   "<strong>Strong consistency</strong>: Every read reflects most recent write. Quorum coordination → higher latency. Use for: payments, auth sessions, inventory deductions.",
+   "<strong>Eventual consistency</strong>: Higher availability, lower latency. Replicas converge in milliseconds to seconds. Use for: product catalog, search indexes, recommendations.",
+   "<strong>Read-your-writes</strong>: User always sees own writes. Minimum bar for user-facing apps. Implement via: read from primary after write, sticky sessions, or cache the write result.",
+  ]},
+ ]},
+];
+
+// ---- Render ----
+const main = document.getElementById('main');
+const tocLinks = document.getElementById('toc-links');
+let totalQ = 0;
+const allCards = [];
+
+data.forEach(section => {
+  const sh = document.createElement('div');
+  sh.className = 'section-header';
+  sh.id = 'sec-' + section.id;
+  sh.innerHTML = `<h2>${section.cat} <span style="color:#4a5568;font-size:.75rem;font-weight:400">(${section.items.length} questions)</span></h2>`;
+  main.appendChild(sh);
+
+  const grid = document.createElement('div');
+  grid.className = 'qa-grid';
+
+  section.items.forEach(item => {
+    totalQ++;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.q = item.q.toLowerCase();
+    card.dataset.a = item.ans.join(' ').toLowerCase();
+    card.dataset.cat = section.cat.toLowerCase();
+    card.id = 'q' + item.id;
+
+    const codeBlock = item.code
+      ? `<pre><code>${item.code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</code></pre>`
+      : '';
+
+    const ansHTML = '<ul>' + item.ans.map(a => `<li>${a}</li>`).join('') + '</ul>' + codeBlock;
+
+    card.innerHTML = `
+      <div class="card-header" onclick="this.parentElement.classList.toggle('open')">
+        <span class="q-num">Q${item.id}</span>
+        <span class="q-text">${item.q}</span>
+        <span class="arrow">▶</span>
+      </div>
+      <div class="card-body">${ansHTML}</div>`;
+    grid.appendChild(card);
+    allCards.push(card);
+
+    const link = document.createElement('div');
+    link.className = 'toc-item';
+    link.innerHTML = `<span class="toc-num">${item.id}</span>${item.q.substring(0,65)}${item.q.length>65?'…':''}`;
+    link.onclick = () => { card.classList.add('open'); card.scrollIntoView({behavior:'smooth',block:'start'}); };
+    tocLinks.appendChild(link);
+  });
+  main.appendChild(grid);
+});
+
+document.getElementById('count').textContent = `${totalQ} questions`;
+
+// ---- Search ----
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  let visible = 0;
+  allCards.forEach(c => {
+    const match = !q || c.dataset.q.includes(q) || c.dataset.a.includes(q) || c.dataset.cat.includes(q);
+    c.classList.toggle('hidden', !match);
+    if (match) { visible++; if (q) c.classList.add('open'); }
+  });
+  document.querySelectorAll('.section-header, .qa-grid').forEach((el,i,arr) => {
+    if (el.classList.contains('section-header')) {
+      const grid = el.nextElementSibling;
+      const hasVis = grid && [...grid.querySelectorAll('.card')].some(c => !c.classList.contains('hidden'));
+      el.classList.toggle('hidden', !hasVis);
+      if (grid) grid.classList.toggle('hidden', !hasVis);
+    }
+  });
+  document.getElementById('count').textContent = q ? `${visible} of ${totalQ} matches` : `${totalQ} questions`;
+});
+
+function expandAll() { allCards.forEach(c => c.classList.add('open')); }
+function collapseAll() { allCards.forEach(c => c.classList.remove('open')); }
+</script>
+</body>
+</html>
